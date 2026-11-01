@@ -242,3 +242,9 @@ O comando consolidado verifica formatação, ESLint (zero warnings), arquitetura
 No Docker, use `docker compose exec -T web npm run check` após reiniciar o serviço para instalar novas dependências. O check gera arquivos em .next; evite executá-lo junto a um build usando o mesmo diretório. O GitHub Actions usa npm ci e os mesmos scripts do check em etapas separadas; consulte o guia de CI.
 
 A issue #27 e as sub-issues #28 a #33 foram validadas e encerradas. Para conferir, execute o check e verifique as prévias /dev/ui, /dev/architecture e /dev/http no ambiente local.
+
+## Validação do CI e documentação (#34)
+
+A issue #34 e as sub-issues #35 a #40 implementam GitHub Actions, qualidade automatizada, build sem API, convenções de contribuição, índice técnico e proteção da master contra exclusão e force push. O fluxo continua com commits e pushes diretos na master; o CI verifica o resultado após o push.
+
+Consulte as [execuções no GitHub Actions](https://github.com/mamura/bacurim/actions) e as [evidências e limites do CI](docs/continuous-integration.md). Para validar localmente, execute npm run check e consulte o índice docs/README.md. Este grupo aguarda validação do mantenedor antes do fechamento das issues.

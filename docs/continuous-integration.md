@@ -23,3 +23,23 @@ O build utiliza APP_URL=https://bacurim.example e API_BASE_URL=http://127.0.0.1:
 Não copie .env.local para o runner. Para reproduzir a qualidade local, execute npm ci e npm run check com Node 24. Use ambiente sem overrides locais para reproduzir as variáveis do workflow. O build valida TypeScript, resolução do pacote UI e processamento de CSS; não equivale a um teste visual de navegador.
 
 Referências: [sintaxe de workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax), [checkout](https://github.com/actions/checkout), [setup-node](https://github.com/actions/setup-node).
+
+## Proteção da master e adaptação do processo (#40)
+
+A [regra clássica da master](https://github.com/mamura/bacurim/settings/branch_protection_rules/85668646) bloqueia force push e exclusão da branch, inclusive para administradores. A opção de bypass administrativo está desativada. A configuração foi salva e conferida no GitHub em 01/11/2026, após reautenticação pelo mantenedor. A regra é externa aos arquivos e deve ser recriada se o repositório for migrado.
+
+O repositório é público, portanto o GitHub Free permite aplicar essa proteção. Não há exigência de PR, aprovação de outro usuário ou check prévio ao push. O check de referência é Quality, cuja aprovação deve ser conferida após cada push, conforme CONTRIBUTING.
+
+A decisão do mantenedor de trabalhar exclusivamente na master substitui os exercícios originalmente previstos de PR de teste e bloqueio de merge. Exigir Quality antes de aceitar o commit demandaria primeiro publicar esse commit em outra ref, contrariando esse processo. O CI detecta falhas após o push; ele não impede que um commit inválido alcance a master. A validação local antes do envio continua obrigatória. Se o processo mudar, habilitar Quality obrigatório e revisar o fluxo antes de criar branches ou PRs.
+
+## Evidências de validação
+
+A [execução 41358638103](https://github.com/mamura/bacurim/actions/runs/41358638103), no commit 1d2f916, concluiu com sucesso no runner GitHub: instalação com lockfile, formatação, lint, arquitetura, tipos, 41 testes e build de produção sem API, credenciais ou checkouts vizinhos.
+
+Os pushes sucessivos cancelaram execuções antigas da mesma master, validando a configuração de concorrência. O evento pull_request está configurado, mas não foi exercitado por decisão de trabalhar apenas na master.
+
+Uma cópia isolada criada por git archive, sem .env.local, node_modules ou arquivos de checkouts vizinhos, passou npm ci e npm run check com API indisponível. Nessa cópia, falhas controladas retornaram lint=1, tipos=2, testes=1 e build=1; o build também rejeitou API_MOCKS_ENABLED=true. Os arquivos temporários foram removidos. Nenhuma variável de produção foi necessária.
+
+Falhas controladas de lint, tipos, testes e build foram verificadas localmente em cópia isolada do código versionado; nenhum commit propositalmente quebrado é publicado na master. Esse exercício comprova os códigos de saída dos comandos, mas não representa uma execução remota com falha. O workflow usa a propagação padrão de erros do GitHub Actions, sem continue-on-error.
+
+Não foi tentada uma exclusão ou reescrita real da master para testar as opções de proteção: a evidência é a configuração persistida. Push normal após sua criação confirma a compatibilidade com o fluxo de desenvolvimento.
