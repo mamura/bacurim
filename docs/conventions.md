@@ -9,6 +9,7 @@ Nenhuma variável é obrigatória para executar a página inicial.
 | Variável | Visibilidade | Padrão | Finalidade |
 | --- | --- | --- | --- |
 | APP_URL | Servidor | http://bacurim.mamura.test | URL absoluta da aplicação; use a URL pública no build de produção. |
+| ENABLE_UI_PREVIEW | Servidor | false | Habilita /dev/ui em produção somente com o valor true; em desenvolvimento a prévia está disponível. |
 
 Variáveis sem prefixo são privadas ao servidor. Nunca reexporte credenciais
 para componentes cliente, propriedades serializadas ou respostas HTTP.
@@ -46,3 +47,8 @@ Implemente uma sub-issue por vez. Valide os tipos e o build quando houver
 mudança executável, revise o diff, crie um commit com referência à issue
 e faça push antes de iniciar a próxima. Alterações apenas documentais
 exigem conferir comandos, caminhos e consistência com a configuração.
+
+Trabalhe diretamente na branch master, sem branches auxiliares ou PRs.
+Conclua a implementação da issue principal e de suas sub-issues e aguarde
+a validação do usuário. Feche as issues somente após essa aprovação e
+então avance para a próxima issue principal.

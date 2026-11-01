@@ -110,6 +110,7 @@ tem um padrão e não exige credenciais.
 | Variável | Padrão | Uso |
 | --- | --- | --- |
 | `APP_URL` | `http://bacurim.mamura.test` | URL absoluta HTTP(S) para os metadados da aplicação |
+| `ENABLE_UI_PREVIEW` | `false` | Libera a prévia técnica em produção apenas quando definido como true |
 
 Para usar a URL local como referência, defina `APP_URL=http://localhost:3000`.
 Na produção, configure a URL pública **antes do build**, pois a rota atual
@@ -142,14 +143,14 @@ A arquitetura definitiva por funcionalidades será definida na issue #13.
 
 Tailwind CSS 4.3.3 é processado pelo plugin `@tailwindcss/postcss`.
 O layout importa `src/app/globals.css` uma única vez. Tailwind fornece
-o único reset atual (Preflight); a página temporária usa seus utilitários
+o único reset (Preflight); a página temporária usa seus utilitários
 de layout e tipografia, incluindo um breakpoint responsivo.
 
 A versão é compatível com a usada no Bacurim UI. A integração do pacote,
-dos tokens e das fontes Poppins e Inter ocorrerá nas issues #7 a #12.
+dos tokens e das fontes Poppins e Inter está implementada nas issues #7 a #12.
 Não copie componentes ou foundations do repositório vizinho. Os imports
-públicos e a estratégia de distribuição serão definidos nessa integração.
-Ao integrá-lo, confira a ordem dos estilos e evite duplicar o reset.
+públicos e a distribuição por tarball versionado estão documentados.
+O CSS público da biblioteca está integrado sem duplicar o reset.
 
 ## Resolução de problemas
 
@@ -161,3 +162,15 @@ Ao integrá-lo, confira a ordem dos estilos e evite duplicar o reset.
   `docker compose restart web` para reinstalar a partir do lockfile.
 - Porta 3000 ocupada no modo local: pare o processo anterior ou use
   `npm run dev -- --port 3001`.
+
+## Validação do Bacurim UI
+
+A integração da issue #7 e suas sub-issues #8 a #12 está pronta para
+validação. No ambiente de desenvolvimento, acesse
+[bacurim.mamura.test/dev/ui](http://bacurim.mamura.test/dev/ui).
+
+A rota demonstra componentes reais, estados interativos e navegação
+responsiva. Em produção retorna 404 por padrão. Leia o
+[guia de consumo, atualização e validação](docs/bacurim-ui.md) para conhecer
+as convenções e o roteiro de conferência. O tarball versionado em vendor/
+permite instalar a aplicação sem um checkout da biblioteca.

@@ -57,3 +57,82 @@ tipagem em `bacurim-ui#71`. O pacote e o Storybook fazem build.
 O comando original `npm run build` da biblioteca ainda encontra erros
 preexistentes de tipagem em histórias (FormField, FilterBar e ordenação de
 tabela); essas histórias não são incluídas no pacote instalado.
+
+## Convenções de utilização (#12)
+
+Importe componentes e tipos somente de `bacurim-ui`. Não faça imports de
+`src/`, `dist-package/` ou caminhos relativos para o repositório vizinho.
+O `@source` do Tailwind aponta para o pacote instalado para detectar suas
+classes; isso não representa um import de implementação.
+
+```tsx
+"use client";
+
+import { Button, Input, type ButtonProps } from "bacurim-ui";
+```
+
+Use componentes cliente para estado, callbacks e composição interativa.
+Páginas de servidor podem renderizar componentes públicos com props
+serializáveis. Nunca passe funções comuns de um Server Component ao cliente.
+A configuração privada da aplicação permanece em módulos server-only.
+
+A aplicação é responsável por compor páginas e fluxos de negócio.
+Componentes próprios podem expressar uma necessidade específica da aplicação
+que ainda não exista na biblioteca; não copie nem recrie Button, Input,
+Sidebar ou seus estilos. Antes de criar uma alternativa visual reutilizável,
+abra uma issue no repositório da biblioteca. Correções e novas variantes
+devem ser incorporadas por uma nova versão do pacote.
+
+O CSS global importa Tailwind uma vez e o CSS público da biblioteca uma vez.
+Os tokens originais geram as classes semânticas (bg-primary, text-text-primary,
+font-heading, font-body, heading-md, etc.). Não redeclare valores de cores,
+fontes, radius ou sombras no frontend. Fontsource fornece Inter 400/500 e
+Poppins 600/700 localmente, sem depender de Google Fonts.
+
+## Rota temporária e validação manual
+
+Acesse [a prévia local](http://bacurim.mamura.test/dev/ui) com o servidor de
+desenvolvimento. Ela compõe componentes reais do pacote, sem chamadas à API.
+
+- Recolha e expanda a Sidebar; selecione seções e confira o item ativo.
+- Em tela menor que 1024 px, use Abrir navegação. A seleção fecha o painel;
+  Escape também deve fechá-lo e devolver o foco ao botão de abertura.
+- Use Testar ação e confira a notificação.
+- Abra o diálogo, confira foco e fechamento com Escape.
+- Digite no formulário, altere o Select e ative o checkbox de erro.
+- Valide o formulário: o botão mostra carregamento e uma confirmação local.
+- Confira botões e campo desabilitados, Badge, Progress, Skeleton e Table.
+- Confira Poppins nos títulos e Inter no corpo, incluindo em tela pequena.
+
+A rota exporta noindex/nofollow e usa verificação no servidor por requisição.
+Em produção ela retorna 404, a menos que `ENABLE_UI_PREVIEW=true` seja
+explicitamente definido no processo do servidor. Essa flag é privada e
+não deve ser habilitada em uma disponibilização normal aos usuários.
+Não há link da página inicial para essa rota.
+
+Para validar o build de produção localmente:
+
+```bash
+npm run build
+ENABLE_UI_PREVIEW=true npm start
+```
+
+Sem a flag, `npm start` deve servir a página inicial e retornar 404 na
+prévia. Isso permite manter o exemplo isolado durante o desenvolvimento.
+
+## Evidências desta integração
+
+- Build do pacote e build Storybook concluídos.
+- Frontend: npm run typecheck e npm run build concluídos.
+- npm ls confirmou React e React DOM 19.3.1 compartilhados pelos pacotes.
+- CSS de produção contém os tokens, utilitários e fontes WOFF2 locais;
+  apenas uma camada base de Preflight.
+- Navegador: estados de Sidebar, formulário, Select, diálogo, notificações
+  e fontes conferidos em produção; sem erros ou avisos no console.
+- Desktop e viewport móvel de 390 px sem transbordamento horizontal.
+- Traefik: HTTP 200 para a prévia de desenvolvimento.
+- Produção: 404 por padrão e 200 com habilitação explícita da prévia.
+
+O erro do build da demonstração da biblioteca está registrado separadamente
+em [bacurim-ui#72](https://github.com/mamura/bacurim-ui/issues/72).
+As issues desta integração ficam abertas até a validação do usuário.

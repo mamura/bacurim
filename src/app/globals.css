@@ -2,4 +2,4 @@
 @import "bacurim-ui/styles.css";
 
 /* Scan the installed, versioned package; no sibling checkout is required. */
-@source "../../node_modules/bacurim-ui/dist-package/index.js";
+@source "../../node_modules/bacurim-ui";
