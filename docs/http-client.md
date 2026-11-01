@@ -146,3 +146,29 @@ HTTP 401 chega ao serviço como erro tipado; a futura camada de sessão
 decidirá quando encerrar a sessão ou solicitar login. Não redirecionar
 globalmente dentro do cliente HTTP, nem repetir uma mutação após renovar
 credenciais. Cookies, CSRF e refresh pertencem a WEB-M1.
+
+## Mocks explícitos (#25)
+
+Em .env.local, defina API_MOCKS_ENABLED=true e, opcionalmente,
+API_MOCK_SCENARIO=success. Reinicie o servidor após alterar a configuração.
+Cenários: success, validation, unauthenticated, forbidden, not-found,
+conflict, server-error, network e timeout.
+
+O adaptador de servidor carrega o transporte simulado apenas quando
+habilitado em development/test. Em produção, a política rejeita os mocks;
+next.config.ts também impede build/start com API_MOCKS_ENABLED=true.
+Não há interceptação global de fetch, endpoint mock público ou flag pública.
+
+Os testes podem injetar createApiMockFetch diretamente, sem depender de
+env, rede, React ou API real. Cada instância é isolada e descarta seu
+estado ao terminar o teste. A futura configuração Vitest poderá reutilizar
+essas fixtures/transportes.
+
+health representa o contrato real. examples existe apenas no transporte
+de testes para demonstrar os envelopes, IDs/decimais, paginação e 204;
+não é um endpoint Laravel ou uma funcionalidade financeira implementada.
+Erros simulados são Responses reais processadas pelo mesmo cliente HTTP.
+
+Para usar a API real, desative API_MOCKS_ENABLED e configure API_BASE_URL.
+Nenhum componente ou serviço muda de import; o mesmo adaptador passa a usar
+fetch real. createServerApiClient é assíncrono por carregar o mock sob demanda.

@@ -167,12 +167,18 @@ test("auth extension is request scoped and cannot stall beyond the request deadl
 });
 
 test("server adapter applies the private timeout configuration", async () => {
-  const { createServerApiClient } = await import("../../src/shared/http/server.ts");
+  const { createServerApiClient } =
+    await import("../../src/shared/http/server.ts");
   const previous = process.env.API_TIMEOUT_MS;
   process.env.API_TIMEOUT_MS = "20";
   try {
-    const client = createServerApiClient({ fetch: async () => new Promise<Response>(() => {}) });
-    await assert.rejects(client.request("health"), (error) => error instanceof ApiError && error.kind === "timeout");
+    const client = await createServerApiClient({
+      fetch: async () => new Promise<Response>(() => {}),
+    });
+    await assert.rejects(
+      client.request("health"),
+      (error) => error instanceof ApiError && error.kind === "timeout",
+    );
   } finally {
     if (previous === undefined) delete process.env.API_TIMEOUT_MS;
     else process.env.API_TIMEOUT_MS = previous;
