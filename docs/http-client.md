@@ -87,10 +87,10 @@ Para alterar no Compose, defina API_BASE_URL no ambiente do comando ou no
 arquivo .env do Compose; esse valor tem precedência sobre .env.local.
 Nenhuma conexão é aberta durante o build ou ao renderizar a página inicial.
 
-npm run test:http usa o runner do Node 24 e tipos removíveis. Os imports
+npm run test:http usa Vitest no ambiente Node 24. Os imports
 relativos do núcleo terminam em .ts, com allowImportingTsExtensions e
 noEmit no TypeScript. Os testes também são verificados por typecheck.
-A configuração completa de Vitest/React será feita na issue #27.
+A configuração Vitest/React e as convenções estão em [testing.md](testing.md).
 
 ## Erros (#23)
 
@@ -196,8 +196,9 @@ npm run typecheck
 npm run build
 ```
 
-test:http executa os contratos sem depender da API; o teste contra Laravel
-real é ignorado quando API_INTEGRATION_URL não está explicitamente definido.
+test:http executa os contratos sem depender da API. O teste contra Laravel
+usa o comando separado test:http:integration; nele, o caso é ignorado
+quando API_INTEGRATION_URL não está explicitamente definido.
 Para executar esse contrato na rede do ambiente Docker:
 
 ```bash

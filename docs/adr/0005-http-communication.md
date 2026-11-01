@@ -1,6 +1,6 @@
 # ADR 0005 — Fetch nativo e serviços de integração
 
-Status: adotada na implementação da issue #20; validação do usuário pendente.
+Status: aprovada pelo usuário após validação da issue #20.
 
 ## Contexto
 

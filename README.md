@@ -213,3 +213,33 @@ uma falha segura; os testes e mocks independem da API real.
 Veja [o guia HTTP](docs/http-client.md) para configurar URLs, executar
 a integração real e conferir os cenários simulados. Mocks são rejeitados
 no build/start de produção. Nenhum fluxo de autenticação está implementado.
+
+## Testes e qualidade (#27)
+
+Vitest executa testes HTTP, serviços, hooks e componentes com React Testing Library, jest-dom e jsdom. Consulte [a estratégia de testes](docs/testing.md) para convenções, mocks e limites.
+
+Antes de cada commit na master:
+
+```sh
+npm ci
+npm run check
+```
+
+O comando consolidado verifica formatação, ESLint (zero warnings), arquitetura, TypeScript strict, todos os testes locais e build de produção, nessa ordem. A primeira falha interrompe a execução com status diferente de zero. Nenhuma API real é necessária. A integração Laravel opcional continua separada.
+
+| Comando                    | Uso                                               |
+| -------------------------- | ------------------------------------------------- |
+| npm test                   | Suíte completa, uma execução                      |
+| npm run test:watch         | Desenvolvimento interativo                        |
+| npm run test:http          | Contratos do cliente e transporte                 |
+| npm run lint               | Next.js, React, TypeScript e ordenação de imports |
+| npm run lint:fix           | Correções automáticas de lint                     |
+| npm run format:check       | Conferência de formatação                         |
+| npm run format             | Aplicação do Prettier                             |
+| npm run typecheck          | Tipos de rotas e código/testes                    |
+| npm run check:architecture | Fronteiras e ciclos                               |
+| npm run check              | Qualidade completa e build                        |
+
+No Docker, use `docker compose exec -T web npm run check` após reiniciar o serviço para instalar novas dependências. O check gera arquivos em .next; evite executá-lo junto a um build usando o mesmo diretório. A configuração futura de CI poderá reutilizar npm ci e npm run check; nenhum workflow foi adicionado nesta etapa.
+
+A issue #27 e as sub-issues #28 a #33 aguardam validação do usuário. Para conferir, execute o check e verifique as prévias /dev/ui, /dev/architecture e /dev/http no ambiente local.
