@@ -1,6 +1,6 @@
 import "server-only";
 
-import { getApiBaseUrl } from "../config/api.ts";
+import { getApiBaseUrl, getApiTimeoutMs } from "../config/api.ts";
 import { createHttpClient } from "./client.ts";
 import type { HttpClient, HttpClientConfig } from "./types.ts";
 

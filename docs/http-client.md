@@ -114,3 +114,35 @@ Falhas de parse em um erro mantêm sua categoria HTTP e mensagem segura.
 Uma resposta 2xx com JSON inválido ou conteúdo inesperado é invalid-response.
 Cabeçalhos X-Request-ID válidos são preservados quando fornecidos pela API;
 nenhum identificador é exigido do backend atual.
+
+## Ciclo de requisição e autenticação futura (#24)
+
+O timeout padrão é 10 segundos e pode ser configurado por API_TIMEOUT_MS
+ou por request (1 a 120000 ms). Um único deadline cobre headers dinâmicos,
+fetch, leitura do corpo e espera entre tentativas. O AbortSignal do chamador
+permite cancelamento, distinguido de timeout e de falhas de rede.
+Listeners e timers são removidos ao terminar.
+
+Não há retry por padrão. Um GET pode optar por até duas repetições, somente
+em falha de rede ou HTTP 429/502/503/504. Timeout, cancelamento e demais
+erros não são repetidos. POST/PUT/PATCH/DELETE nunca são repetidos
+automaticamente, mesmo quando retries for informado.
+
+Backoff começa em 200 ms e é limitado a 1 segundo. Retry-After válido é
+respeitado: se pedir uma espera maior que o limite, a falha é devolvida sem
+tentar antes do prazo. O deadline global também limita essa espera.
+
+Cada chamada envia X-Request-ID seguro (preservado se fornecido ou gerado).
+Tentativas da mesma chamada reutilizam esse identificador; respostas podem
+fornecer seu próprio ID. O backend atual não precisa ecoar esse header.
+Isso é correlação, não chave de idempotência e não substitui deduplicação.
+
+getHeaders é um ponto de extensão assíncrono para autenticação por
+request/contexto. Ele recebe método, URL e signal, sem estado global.
+Nenhum token é buscado, armazenado, renovado ou encaminhado automaticamente.
+Não repasse todos os cookies/headers do navegador à API.
+
+HTTP 401 chega ao serviço como erro tipado; a futura camada de sessão
+decidirá quando encerrar a sessão ou solicitar login. Não redirecionar
+globalmente dentro do cliente HTTP, nem repetir uma mutação após renovar
+credenciais. Cookies, CSRF e refresh pertencem a WEB-M1.

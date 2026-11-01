@@ -1,10 +1,17 @@
 import type { SafeProblemDetails } from "./problem-details.ts";
 
 export type ApiErrorKind =
-  "http" | "network" | "invalid-response" | "configuration";
+  | "http"
+  | "network"
+  | "invalid-response"
+  | "configuration"
+  | "timeout"
+  | "cancelled";
 
 const messages: Record<ApiErrorKind, string> = {
   http: "Não foi possível concluir a solicitação. Tente novamente.",
+  timeout: "A solicitação demorou mais do que o esperado. Tente novamente.",
+  cancelled: "A solicitação foi cancelada.",
   network: "Não foi possível conectar ao servidor. Verifique sua conexão.",
   "invalid-response": "O servidor retornou uma resposta inesperada.",
   configuration: "A configuração de comunicação é inválida.",

@@ -5,6 +5,8 @@ export type QueryParameters =
 
 export interface HttpRequestOptions<TBody = unknown> {
   method?: HttpMethod;
+  timeoutMs?: number;
+  retries?: number;
   query?: QueryParameters;
   body?: TBody;
   headers?: HeadersInit;
@@ -14,12 +16,21 @@ export interface HttpRequestOptions<TBody = unknown> {
 
 export interface HttpResponse<T> {
   status: number;
+  requestId?: string;
   data: T | undefined;
   headers: Headers;
 }
 
 export interface HttpClientConfig {
   baseUrl: string;
+  timeoutMs?: number;
+  retries?: number;
+  retryDelayMs?: number;
+  getHeaders?: (context: {
+    method: HttpMethod;
+    url: URL;
+    signal: AbortSignal;
+  }) => HeadersInit | Promise<HeadersInit>;
   fetch?: typeof globalThis.fetch;
   headers?: HeadersInit;
   credentials?: RequestCredentials;
