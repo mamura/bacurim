@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+
 import ts from "typescript";
 
 export function checkArchitecture(root = process.cwd()) {

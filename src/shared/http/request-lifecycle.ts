@@ -63,7 +63,10 @@ export function withAbort<T>(
 
 export function waitForRetry(ms: number, signal: AbortSignal): Promise<void> {
   return new Promise((resolve, reject) => {
-    let timer: ReturnType<typeof setTimeout>;
+    if (signal.aborted) {
+      reject(new DOMException("Aborted", "AbortError"));
+      return;
+    }
     const cleanup = () => {
       clearTimeout(timer);
       signal.removeEventListener("abort", onAbort);
@@ -72,12 +75,8 @@ export function waitForRetry(ms: number, signal: AbortSignal): Promise<void> {
       cleanup();
       reject(new DOMException("Aborted", "AbortError"));
     };
-    if (signal.aborted) {
-      onAbort();
-      return;
-    }
     signal.addEventListener("abort", onAbort, { once: true });
-    timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       cleanup();
       resolve();
     }, ms);

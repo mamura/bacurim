@@ -1,12 +1,11 @@
-import type { Metadata } from "next";
-import { Suspense } from "react";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-
 import { FoundationDemo } from "@features/foundation-demo";
 import { getFoundationItems } from "@features/foundation-demo/server";
 import { isDevelopmentPreviewEnabled } from "@shared/lib/development-preview";
 import { PageLoading } from "@shared/ui/page-loading";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 

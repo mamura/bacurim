@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-
 import { ApiStatus } from "@features/api-status";
 import { getApiStatus } from "@features/api-status/server";
 import { isDevelopmentPreviewEnabled } from "@shared/lib/development-preview";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {

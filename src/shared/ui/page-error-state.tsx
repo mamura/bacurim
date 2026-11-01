@@ -1,6 +1,5 @@
 "use client";
 
-import type { ReactNode } from "react";
 import {
   Alert,
   AlertContent,
@@ -8,6 +7,7 @@ import {
   AlertTitle,
   Button,
 } from "bacurim-ui";
+import type { ReactNode } from "react";
 
 interface PageErrorStateProps {
   onRetry: () => void;

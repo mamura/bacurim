@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
+
 import { test } from "vitest";
 
-import { createHttpClient } from "../../src/shared/http/client.ts";
 import { ApiError, toApiErrorView } from "../../src/shared/http/api-error.ts";
+import { createHttpClient } from "../../src/shared/http/client.ts";
 
 test("uses HTTP status as authority and maps Problem Details to safe errors", async () => {
   for (const status of [400, 401, 403, 404, 409, 422, 429, 500, 503]) {

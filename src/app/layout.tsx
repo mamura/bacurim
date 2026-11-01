@@ -1,8 +1,8 @@
+import "./globals.css";
+
+import { appConfig } from "@shared/config/app";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-
-import "./globals.css";
-import { appConfig } from "@shared/config/app";
 
 export const metadata: Metadata = {
   metadataBase: appConfig.url,
@@ -17,7 +17,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang={appConfig.locale}>
-      <body className="bg-background font-body text-text-primary">{children}</body>
+      <body className="bg-background font-body text-text-primary">
+        {children}
+      </body>
     </html>
   );
 }

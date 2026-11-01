@@ -1,4 +1,5 @@
 import { fileURLToPath } from "node:url";
+
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vitest/config";
 
@@ -27,7 +28,11 @@ export default defineConfig({
       {
         extends: true,
         resolve: {
-          alias: { "server-only": fileURLToPath(new URL("./tests/setup/server-only.ts", import.meta.url)) },
+          alias: {
+            "server-only": fileURLToPath(
+              new URL("./tests/setup/server-only.ts", import.meta.url),
+            ),
+          },
         },
         test: {
           name: "server",

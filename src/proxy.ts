@@ -1,6 +1,5 @@
-import { NextResponse, type NextRequest } from "next/server";
-
 import { isDevelopmentPreviewEnabled } from "@shared/lib/development-preview";
+import { type NextRequest, NextResponse } from "next/server";
 
 export function proxy(request: NextRequest) {
   const preview = request.nextUrl.pathname.startsWith("/dev/ui")

@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
+
 import { test } from "vitest";
 
-import { createHttpClient } from "../../src/shared/http/client.ts";
 import { ApiError } from "../../src/shared/http/api-error.ts";
+import { createHttpClient } from "../../src/shared/http/client.ts";
 
 test("bounds a stalled fetch and stalled response body with the same timeout", async () => {
   for (const stalledBody of [false, true]) {

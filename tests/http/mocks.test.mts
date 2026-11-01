@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
+
 import { test } from "vitest";
 
-import { createHttpClient } from "../../src/shared/http/client.ts";
 import { ApiError } from "../../src/shared/http/api-error.ts";
+import { createHttpClient } from "../../src/shared/http/client.ts";
 import { createApiMockFetch } from "../../src/shared/http/testing/mock-fetch.ts";
 import { getApiMockScenario } from "../../src/shared/http/testing/mock-policy.ts";
 

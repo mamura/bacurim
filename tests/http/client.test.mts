@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
+
 import { test } from "vitest";
 
-import { createHttpClient } from "../../src/shared/http/client.ts";
 import { ApiError } from "../../src/shared/http/api-error.ts";
+import { createHttpClient } from "../../src/shared/http/client.ts";
 import type { ApiResource } from "../../src/shared/http/contracts.ts";
 
 test("serializes JSON methods and preserves resource envelopes, IDs and decimals", async () => {

@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
-
 import { PageErrorState } from "@shared/ui/page-error-state";
+import Link from "next/link";
 
 export default function DevelopmentError({ reset }: { reset: () => void }) {
   return (

@@ -11,17 +11,17 @@ Referências de produto: Product Definition/09 - MVP Features.md,
 Product Definition/10 - Domain Model.md e Product Design/12 - Information
 Architecture.md, disponíveis na pasta compartilhada do projeto.
 
-| Área candidata | Responsabilidade | Limite |
-| --- | --- | --- |
-| authentication | Identificação, sessão e usuários autorizados | Sem regras financeiras; implementação em WEB-M1 |
-| organizations | Dados da empresa e contexto do tenant | Uma empresa por tenant no MVP; sem alternância global entre tenants |
-| financial-accounts | Contas e informações de disponibilidade | Não recalcula saldos ou movimentações no navegador |
-| categories | Classificação financeira | Vocabulário comum a lançamentos, sem copiar regras da API |
-| financial-transactions | Registros, compromissos e realizações apresentados em conjunto | A pagar e A receber são filtros, não features independentes |
-| financial-planning | Parcelamentos, recorrências e projeção de 12 meses | Cálculo e regras pertencem à API |
-| financial-reporting | Resultado, fluxo de caixa e sínteses de análise | Mantém distinção entre competência, caixa e retiradas |
-| data-import | Seleção, mapeamento, prévia e validação de arquivos | Ação dentro do Financeiro; processamento oficial na API |
-| onboarding | Orientação e configuração inicial | Compõe capacidades, sem duplicar suas implementações |
+| Área candidata         | Responsabilidade                                               | Limite                                                              |
+| ---------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------- |
+| authentication         | Identificação, sessão e usuários autorizados                   | Sem regras financeiras; implementação em WEB-M1                     |
+| organizations          | Dados da empresa e contexto do tenant                          | Uma empresa por tenant no MVP; sem alternância global entre tenants |
+| financial-accounts     | Contas e informações de disponibilidade                        | Não recalcula saldos ou movimentações no navegador                  |
+| categories             | Classificação financeira                                       | Vocabulário comum a lançamentos, sem copiar regras da API           |
+| financial-transactions | Registros, compromissos e realizações apresentados em conjunto | A pagar e A receber são filtros, não features independentes         |
+| financial-planning     | Parcelamentos, recorrências e projeção de 12 meses             | Cálculo e regras pertencem à API                                    |
+| financial-reporting    | Resultado, fluxo de caixa e sínteses de análise                | Mantém distinção entre competência, caixa e retiradas               |
+| data-import            | Seleção, mapeamento, prévia e validação de arquivos            | Ação dentro do Financeiro; processamento oficial na API             |
+| onboarding             | Orientação e configuração inicial                              | Compõe capacidades, sem duplicar suas implementações                |
 
 Esses nomes são candidatos técnicos, não uma árvore de diretórios já criada
 nem uma cópia da navegação. Visão Geral pode compor resumos no nível de rota.
@@ -55,16 +55,16 @@ Veja [ADR 0001](adr/0001-feature-based-architecture.md).
 
 ## Estrutura e entradas públicas (#15)
 
-| Diretório | Responsabilidade |
-| --- | --- |
-| src/app | URLs, metadados, layouts, estados da rota e composição |
-| src/features/<nome>/components | Apresentação e composição interna da funcionalidade |
-| src/features/<nome>/hooks | Estado e comportamento reutilizado dentro da funcionalidade |
-| src/features/<nome>/services | Acesso a dados e adaptação para modelos de apresentação |
-| src/features/<nome>/model | Tipos e transformações puras específicos da funcionalidade |
-| src/shared/config | Parâmetros neutros da aplicação, com proteção server-only quando privados |
-| src/shared/ui | Composições neutras de UI; sem cópia de primitivos da biblioteca |
-| src/shared/lib | Utilidades com responsabilidade concreta e consumidores reais |
+| Diretório                      | Responsabilidade                                                          |
+| ------------------------------ | ------------------------------------------------------------------------- |
+| src/app                        | URLs, metadados, layouts, estados da rota e composição                    |
+| src/features/<nome>/components | Apresentação e composição interna da funcionalidade                       |
+| src/features/<nome>/hooks      | Estado e comportamento reutilizado dentro da funcionalidade               |
+| src/features/<nome>/services   | Acesso a dados e adaptação para modelos de apresentação                   |
+| src/features/<nome>/model      | Tipos e transformações puras específicos da funcionalidade                |
+| src/shared/config              | Parâmetros neutros da aplicação, com proteção server-only quando privados |
+| src/shared/ui                  | Composições neutras de UI; sem cópia de primitivos da biblioteca          |
+| src/shared/lib                 | Utilidades com responsabilidade concreta e consumidores reais             |
 
 Crie as subpastas somente quando houver arquivos. O módulo ui-preview é
 uma ferramenta técnica, não uma funcionalidade financeira nem parte do

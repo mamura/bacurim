@@ -2,13 +2,13 @@
 
 ## Fonte de verdade
 
-| Tipo de estado | Ferramenta inicial | Exemplo |
-| --- | --- | --- |
-| Local e transitório | useState/useReducer no menor componente cliente | Diálogo aberto, formulário, Sidebar recolhida |
-| Derivado | Cálculo puro; useMemo apenas se útil | Lista filtrada e contagem a partir dos mesmos itens |
-| Navegável/compartilhável | URL e searchParams | Paginação, período, ordenação e filtro persistente de uma listagem |
-| Compartilhado na mesma árvore | Elevar estado; Context restrito ao fluxo se necessário | Contexto visual do App Shell |
-| Remoto | Serviço da feature, servidor como origem | Dados de sessão e respostas da API |
+| Tipo de estado                | Ferramenta inicial                                     | Exemplo                                                            |
+| ----------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------ |
+| Local e transitório           | useState/useReducer no menor componente cliente        | Diálogo aberto, formulário, Sidebar recolhida                      |
+| Derivado                      | Cálculo puro; useMemo apenas se útil                   | Lista filtrada e contagem a partir dos mesmos itens                |
+| Navegável/compartilhável      | URL e searchParams                                     | Paginação, período, ordenação e filtro persistente de uma listagem |
+| Compartilhado na mesma árvore | Elevar estado; Context restrito ao fluxo se necessário | Contexto visual do App Shell                                       |
+| Remoto                        | Serviço da feature, servidor como origem               | Dados de sessão e respostas da API                                 |
 
 Um filtro de demonstração descartável pode ser local; filtros de uma
 listagem real devem priorizar a URL quando fizer sentido preservar ou

@@ -1,6 +1,6 @@
-import { vi } from "vitest";
 import { createApiMockFetch } from "@shared/http/testing/mock-fetch";
 import type { ApiMockScenario } from "@shared/http/testing/mock-policy";
+import { vi } from "vitest";
 
 // Intercepts only the test process; no network fallback is allowed.
 export function mockApi(scenario: ApiMockScenario = "success") {

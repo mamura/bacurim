@@ -20,17 +20,17 @@ A feature ui-preview permanece separada e não é importada pelo exemplo.
 
 ## Cenários para validar
 
-| Ação | Resultado esperado |
-| --- | --- |
-| Abrir Normal | Três itens recebidos do serviço |
-| Filtrar por roteamento | Um item, sem nova leitura remota |
-| Filtrar por inexistente | Empty state de filtro, com ação para limpar |
-| Clicar Mostrar todos os itens | Lista restaurada |
-| Abrir Lista vazia | Empty state de leitura bem-sucedida sem dados |
-| Abrir Carregamento | Skeleton/status durante o atraso de demonstração, depois lista |
-| Abrir Erro de leitura | Mensagem segura, retry e caminho de recuperação |
-| Reabrir exemplo sem erro simulado | Navegação de documento para o cenário normal |
-| Abrir prévia do Bacurim UI | Componentes aprovados continuam disponíveis |
+| Ação                              | Resultado esperado                                             |
+| --------------------------------- | -------------------------------------------------------------- |
+| Abrir Normal                      | Três itens recebidos do serviço                                |
+| Filtrar por roteamento            | Um item, sem nova leitura remota                               |
+| Filtrar por inexistente           | Empty state de filtro, com ação para limpar                    |
+| Clicar Mostrar todos os itens     | Lista restaurada                                               |
+| Abrir Lista vazia                 | Empty state de leitura bem-sucedida sem dados                  |
+| Abrir Carregamento                | Skeleton/status durante o atraso de demonstração, depois lista |
+| Abrir Erro de leitura             | Mensagem segura, retry e caminho de recuperação                |
+| Reabrir exemplo sem erro simulado | Navegação de documento para o cenário normal                   |
+| Abrir prévia do Bacurim UI        | Componentes aprovados continuam disponíveis                    |
 
 O atraso de 900 ms e a exceção simulada existem somente no serviço técnico.
 No cenário de erro, Tentar novamente repete a leitura e continuará falhando

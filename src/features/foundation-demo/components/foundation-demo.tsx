@@ -1,6 +1,6 @@
 "use client";
 
-import { useId } from "react";
+import { PageEmptyState } from "@shared/ui/page-empty-state";
 import {
   Badge,
   Button,
@@ -18,8 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "bacurim-ui";
-
-import { PageEmptyState } from "@shared/ui/page-empty-state";
+import { useId } from "react";
 
 import { useFoundationFilter } from "../hooks/use-foundation-filter";
 import type { FoundationItem } from "../model/types";

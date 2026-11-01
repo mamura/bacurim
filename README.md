@@ -5,11 +5,11 @@ Frontend do Bacurim. Esta base implementa a inicialização da aplicação
 
 ## Requisitos
 
-| Ferramenta | Versão |
-| --- | --- |
-| Node.js | 24 LTS (use `.nvmrc`) |
-| npm | 10 ou superior |
-| Git | Disponível no ambiente |
+| Ferramenta       | Versão                                       |
+| ---------------- | -------------------------------------------- |
+| Node.js          | 24 LTS (use `.nvmrc`)                        |
+| npm              | 10 ou superior                               |
+| Git              | Disponível no ambiente                       |
 | Docker e Compose | Necessários apenas para executar com Traefik |
 
 Execute os comandos no Linux/WSL, dentro de `bacurim-web`.
@@ -75,16 +75,16 @@ no host por ele; o acesso ocorre pelo Traefik via HTTP.
 
 ## Comandos de validação e produção
 
-| Comando | Finalidade |
-| --- | --- |
-| `npm ci` | Instalar exatamente as versões do lockfile |
-| `npm run dev` | Executar o servidor com atualização automática |
-| `npm run check:architecture` | Verificar limites de imports e ciclos |
-| `npm run test:http` | Executar testes HTTP independentes da API real |
+| Comando                         | Finalidade                                       |
+| ------------------------------- | ------------------------------------------------ |
+| `npm ci`                        | Instalar exatamente as versões do lockfile       |
+| `npm run dev`                   | Executar o servidor com atualização automática   |
+| `npm run check:architecture`    | Verificar limites de imports e ciclos            |
+| `npm run test:http`             | Executar testes HTTP independentes da API real   |
 | `npm run test:http:integration` | Testar Laravel com API_INTEGRATION_URL explícita |
-| `npm run typecheck` | Gerar tipos das rotas e verificar TypeScript |
-| `npm run build` | Gerar o build otimizado em `.next/` |
-| `npm start` | Servir um build de produção existente |
+| `npm run typecheck`             | Gerar tipos das rotas e verificar TypeScript     |
+| `npm run build`                 | Gerar o build otimizado em `.next/`              |
+| `npm start`                     | Servir um build de produção existente            |
 
 Antes de entregar alterações executáveis:
 
@@ -112,16 +112,16 @@ Os testes HTTP estão disponíveis. Lint, testes React e CI serão configurados 
 locais e é ignorado pelo Git. Sua criação é opcional: a configuração atual
 tem um padrão e não exige credenciais.
 
-| Variável | Padrão | Uso |
-| --- | --- | --- |
-| `APP_URL` | `http://bacurim.mamura.test` | URL absoluta HTTP(S) para os metadados da aplicação |
-| `ENABLE_UI_PREVIEW` | `false` | Libera a prévia técnica em produção apenas quando definido como true |
-| `ENABLE_ARCHITECTURE_PREVIEW` | `false` | Libera o exemplo de arquitetura em produção apenas quando definido como true |
-| `ENABLE_HTTP_PREVIEW` | `false` | Libera a prévia de comunicação em produção apenas com true |
-| `API_BASE_URL` | `http://api-bacurim.mamura.test/api/v1` | URL privada; Compose usa o hostname interno api-bacurim |
-| `API_TIMEOUT_MS` | `10000` | Deadline da requisição em ms |
-| `API_MOCKS_ENABLED` | `false` | Habilita mocks apenas em desenvolvimento/testes |
-| `API_MOCK_SCENARIO` | `success` | Cenário quando os mocks estão habilitados |
+| Variável                      | Padrão                                  | Uso                                                                          |
+| ----------------------------- | --------------------------------------- | ---------------------------------------------------------------------------- |
+| `APP_URL`                     | `http://bacurim.mamura.test`            | URL absoluta HTTP(S) para os metadados da aplicação                          |
+| `ENABLE_UI_PREVIEW`           | `false`                                 | Libera a prévia técnica em produção apenas quando definido como true         |
+| `ENABLE_ARCHITECTURE_PREVIEW` | `false`                                 | Libera o exemplo de arquitetura em produção apenas quando definido como true |
+| `ENABLE_HTTP_PREVIEW`         | `false`                                 | Libera a prévia de comunicação em produção apenas com true                   |
+| `API_BASE_URL`                | `http://api-bacurim.mamura.test/api/v1` | URL privada; Compose usa o hostname interno api-bacurim                      |
+| `API_TIMEOUT_MS`              | `10000`                                 | Deadline da requisição em ms                                                 |
+| `API_MOCKS_ENABLED`           | `false`                                 | Habilita mocks apenas em desenvolvimento/testes                              |
+| `API_MOCK_SCENARIO`           | `success`                               | Cenário quando os mocks estão habilitados                                    |
 
 Para usar a URL local como referência, defina `APP_URL=http://localhost:3000`.
 Na produção, configure a URL pública **antes do build**, pois a rota atual

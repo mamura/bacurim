@@ -37,3 +37,11 @@ Use `mockApi(cenario)` de `tests/helpers/mock-api.ts` antes de chamar um serviç
 Para um contrato novo, acrescente uma resposta ao transporte controlado e teste o serviço com essa fixture. Para respostas malformadas, altere o retorno do spy local com `mockResolvedValue`. Para testes do próprio cliente, prefira injeção direta de fetch. Os testes de transporte usam servidor HTTP efêmero local; a suíte padrão não acessa a API Laravel.
 
 `npm run test:http` executa os contratos HTTP migrados para Vitest. `API_INTEGRATION_URL=http://api-bacurim/api/v1 npm run test:http:integration` executa apenas o teste nativo opcional contra Laravel, dentro da rede Docker.
+
+## Qualidade estática e formatação
+
+ESLint usa as configurações oficiais Core Web Vitals e TypeScript do Next.js, sem warnings permitidos. Imports e exports são ordenados por simple-import-sort. Prettier cuida da formatação com dois espaços e LF; eslint-config-prettier desativa regras conflitantes. TypeScript permanece strict e verifica também testes e configuração Vitest.
+
+Use `npm run lint`, `npm run lint:fix`, `npm run format:check`, `npm run format` e `npm run typecheck`. Arquivos gerados, vendor e saídas de build são ignorados.
+
+ESLint 9 está fixado porque os plugins transitivos de eslint-config-next 16.4.3 ainda declaram peers até 9. Não atualizar para 10 forçando peers. Reavaliar junto à atualização compatível do pacote Next. As dependências de produção não apresentam alertas no npm audit; o ferramental de desenvolvimento ainda tem alertas moderados transitivos que exigem atualização compatível dos mantenedores.

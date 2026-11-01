@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
 import {
   Alert,
   AlertContent,
@@ -25,12 +24,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  FormattedValue,
   FormField,
   FormFieldControl,
   FormFieldDescription,
   FormFieldError,
   FormFieldLabel,
-  FormattedValue,
   Header,
   Input,
   Progress,
@@ -51,6 +50,8 @@ import {
   ToastProvider,
   useToast,
 } from "bacurim-ui";
+import Link from "next/link";
+import { type FormEvent, useState } from "react";
 
 export function UiPreview() {
   return (
@@ -137,9 +138,12 @@ function PreviewContent() {
       header={
         <Header
           logo={
-            <a href="/" className="font-heading text-heading-sm font-semibold">
+            <Link
+              href="/"
+              className="font-heading text-heading-sm font-semibold"
+            >
               Bacurim
-            </a>
+            </Link>
           }
           actions={
             <>

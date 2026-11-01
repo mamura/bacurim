@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
+
 import { test } from "vitest";
 
-import { createHttpClient } from "../../src/shared/http/client.ts";
-import { ApiError } from "../../src/shared/http/api-error.ts";
 import { isHealthResponse } from "../../src/features/api-status/model/is-health-response.ts";
+import { ApiError } from "../../src/shared/http/api-error.ts";
+import { createHttpClient } from "../../src/shared/http/client.ts";
 
 test("real fetch sends headers/body/query and handles 201, 204, Problem Details, redirects and abort", async () => {
   let followedRedirect = false;

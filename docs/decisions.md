@@ -18,7 +18,7 @@ página fica em src/shared/config/app.ts, protegida por server-only.
 
 APP_URL aceita URLs HTTP(S), com padrão para o domínio local.
 O layout define título, descrição, nome da aplicação e idioma pt-BR.
-A configuração usa o alias @/*, resolvido para src/* pelo TypeScript.
+A configuração usa o alias @/_, resolvido para src/_ pelo TypeScript.
 
 A organização por funcionalidades e o estado estão detalhados nas ADRs
 0001 a 0004 e em architecture.md. A comunicação HTTP está implementada conforme a ADR 0005 e http-client.md.

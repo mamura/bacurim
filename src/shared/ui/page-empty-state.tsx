@@ -1,10 +1,10 @@
-import type { ReactNode } from "react";
 import {
   EmptyState,
   EmptyStateActions,
   EmptyStateDescription,
   EmptyStateTitle,
 } from "bacurim-ui";
+import type { ReactNode } from "react";
 
 interface PageEmptyStateProps {
   title: string;

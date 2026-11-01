@@ -2,19 +2,19 @@ import { ApiError } from "./api-error.ts";
 import { safeRequestId } from "./problem-details.ts";
 import { readHttpError } from "./read-http-error.ts";
 import {
-  createRequestScope,
   createRequestId,
+  createRequestScope,
   getRetryDelay,
   validateInteger,
   waitForRetry,
   withAbort,
 } from "./request-lifecycle.ts";
-import { buildRequestUrl, normalizeApiBaseUrl } from "./url.ts";
 import type {
   HttpClient,
   HttpClientConfig,
   HttpRequestOptions,
 } from "./types.ts";
+import { buildRequestUrl, normalizeApiBaseUrl } from "./url.ts";
 
 export function createHttpClient(config: HttpClientConfig): HttpClient {
   const base = normalizeApiBaseUrl(config.baseUrl);

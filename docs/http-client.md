@@ -247,13 +247,13 @@ reais nas fixtures ou copie cookies para esse roteiro.
 
 ### Variáveis
 
-| Variável privada | Padrão | Efeito |
-| --- | --- | --- |
-| API_BASE_URL | http://api-bacurim.mamura.test/api/v1 | Base HTTP(S) no servidor |
-| API_TIMEOUT_MS | 10000 | Deadline total, 1 a 120000 ms |
-| API_MOCKS_ENABLED | false | Opt-in literal true apenas em development/test |
-| API_MOCK_SCENARIO | success | Cenário usado somente com mocks habilitados |
-| ENABLE_HTTP_PREVIEW | false em produção | Libera /dev/http somente com true; dev já permite |
+| Variável privada    | Padrão                                | Efeito                                            |
+| ------------------- | ------------------------------------- | ------------------------------------------------- |
+| API_BASE_URL        | http://api-bacurim.mamura.test/api/v1 | Base HTTP(S) no servidor                          |
+| API_TIMEOUT_MS      | 10000                                 | Deadline total, 1 a 120000 ms                     |
+| API_MOCKS_ENABLED   | false                                 | Opt-in literal true apenas em development/test    |
+| API_MOCK_SCENARIO   | success                               | Cenário usado somente com mocks habilitados       |
+| ENABLE_HTTP_PREVIEW | false em produção                     | Libera /dev/http somente com true; dev já permite |
 
 O Compose substitui apenas a URL padrão pela resolução interna
 http://api-bacurim/api/v1. Os demais valores podem ser configurados em

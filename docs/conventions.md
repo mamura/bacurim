@@ -6,11 +6,11 @@ Copie `.env.example` para `.env.local`. O Next.js carrega esse arquivo
 automaticamente na execução local e no Compose (o diretório está montado).
 Nenhuma variável é obrigatória para executar a página inicial.
 
-| Variável | Visibilidade | Padrão | Finalidade |
-| --- | --- | --- | --- |
-| APP_URL | Servidor | http://bacurim.mamura.test | URL absoluta da aplicação; use a URL pública no build de produção. |
-| ENABLE_UI_PREVIEW | Servidor | false | Habilita /dev/ui em produção somente com o valor true; em desenvolvimento a prévia está disponível. |
-| ENABLE_ARCHITECTURE_PREVIEW | Servidor | false | Habilita /dev/architecture em produção somente com o valor true. |
+| Variável                    | Visibilidade | Padrão                     | Finalidade                                                                                          |
+| --------------------------- | ------------ | -------------------------- | --------------------------------------------------------------------------------------------------- |
+| APP_URL                     | Servidor     | http://bacurim.mamura.test | URL absoluta da aplicação; use a URL pública no build de produção.                                  |
+| ENABLE_UI_PREVIEW           | Servidor     | false                      | Habilita /dev/ui em produção somente com o valor true; em desenvolvimento a prévia está disponível. |
+| ENABLE_ARCHITECTURE_PREVIEW | Servidor     | false                      | Habilita /dev/architecture em produção somente com o valor true.                                    |
 
 Variáveis sem prefixo são privadas ao servidor. Nunca reexporte credenciais
 para componentes cliente, propriedades serializadas ou respostas HTTP.
