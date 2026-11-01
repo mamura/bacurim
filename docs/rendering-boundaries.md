@@ -27,7 +27,7 @@ servidor pode renderizar seus componentes passando props serializáveis.
 Funções de evento pertencem a um componente cliente da aplicação.
 Não crie wrappers de cada primitivo apenas para repetir a diretiva.
 
-Exemplo atual: app/dev/ui carrega @features/ui-preview; a feature mantém
+Exemplo atual: app/(development)/dev/ui carrega @features/ui-preview; a feature mantém
 eventos e estado. A feature não conhece a rota nem lê process.env.
 
 ## Dados seguros e limites de props

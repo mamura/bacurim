@@ -91,3 +91,7 @@ Veja a [estratégia de estado](state-management.md) e a [ADR 0002](adr/0002-stat
 ## Renderização (#17)
 
 Veja as [fronteiras de execução](rendering-boundaries.md) e a [ADR 0003](adr/0003-server-client-boundaries.md).
+
+## Rotas e UI (#18)
+
+Veja [rotas e composição](routing-and-ui.md) e a [ADR 0004](adr/0004-routing-and-ui-composition.md).
