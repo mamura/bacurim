@@ -1,7 +1,10 @@
 # Bacurim
 
-Frontend do Bacurim. Esta base implementa a inicialização da aplicação
-(issue #1, sub-issues #2 a #6), com uma página temporária independente da API.
+Frontend do Bacurim com Next.js, React e TypeScript, arquitetura por funcionalidades,
+Bacurim UI, cliente HTTP e testes automatizados. A página inicial é independente da API.
+
+Consulte o [índice da documentação técnica](docs/README.md), as
+[convenções de contribuição](CONTRIBUTING.md) e o [guia de CI](docs/continuous-integration.md).
 
 ## Requisitos
 
@@ -89,10 +92,7 @@ no host por ele; o acesso ocorre pelo Traefik via HTTP.
 Antes de entregar alterações executáveis:
 
 ```bash
-npm run test:http
-npm run check:architecture
-npm run typecheck
-npm run build
+npm run check
 ```
 
 Para verificar a execução de produção local, pare o servidor de
@@ -104,7 +104,7 @@ npm start
 
 Não execute `dev` e `build` simultaneamente sobre o mesmo diretório de
 saída. O container mantém seu próprio cache, separado do build no host.
-Os testes HTTP estão disponíveis. Lint, testes React e CI serão configurados nas issues específicas.
+Testes HTTP e React, lint, tipos e build fazem parte das verificações locais e do GitHub Actions.
 
 ## Ambiente
 
@@ -178,8 +178,7 @@ O CSS público da biblioteca está integrado sem duplicar o reset.
 
 ## Validação do Bacurim UI
 
-A integração da issue #7 e suas sub-issues #8 a #12 está pronta para
-validação. No ambiente de desenvolvimento, acesse
+A integração da issue #7 e suas sub-issues #8 a #12 foi validada. No ambiente de desenvolvimento, acesse
 [bacurim.mamura.test/dev/ui](http://bacurim.mamura.test/dev/ui).
 
 A rota demonstra componentes reais, estados interativos e navegação
@@ -240,6 +239,6 @@ O comando consolidado verifica formatação, ESLint (zero warnings), arquitetura
 | npm run check:architecture | Fronteiras e ciclos                               |
 | npm run check              | Qualidade completa e build                        |
 
-No Docker, use `docker compose exec -T web npm run check` após reiniciar o serviço para instalar novas dependências. O check gera arquivos em .next; evite executá-lo junto a um build usando o mesmo diretório. A configuração futura de CI poderá reutilizar npm ci e npm run check; nenhum workflow foi adicionado nesta etapa.
+No Docker, use `docker compose exec -T web npm run check` após reiniciar o serviço para instalar novas dependências. O check gera arquivos em .next; evite executá-lo junto a um build usando o mesmo diretório. O GitHub Actions usa npm ci e os mesmos scripts do check em etapas separadas; consulte o guia de CI.
 
-A issue #27 e as sub-issues #28 a #33 aguardam validação do usuário. Para conferir, execute o check e verifique as prévias /dev/ui, /dev/architecture e /dev/http no ambiente local.
+A issue #27 e as sub-issues #28 a #33 foram validadas e encerradas. Para conferir, execute o check e verifique as prévias /dev/ui, /dev/architecture e /dev/http no ambiente local.
