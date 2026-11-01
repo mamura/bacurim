@@ -44,3 +44,12 @@ jobs:
         run: npm run typecheck
       - name: Run tests
         run: npm test
+      - name: Build production application
+        run: npm run build
+        env:
+          APP_URL: https://bacurim.example
+          API_BASE_URL: http://127.0.0.1:9/api/v1
+          API_MOCKS_ENABLED: "false"
+          ENABLE_UI_PREVIEW: "false"
+          ENABLE_ARCHITECTURE_PREVIEW: "false"
+          ENABLE_HTTP_PREVIEW: "false"
