@@ -95,3 +95,26 @@ Veja as [fronteiras de execução](rendering-boundaries.md) e a [ADR 0003](adr/0
 ## Rotas e UI (#18)
 
 Veja [rotas e composição](routing-and-ui.md) e a [ADR 0004](adr/0004-routing-and-ui-composition.md).
+
+## Organização validada (#19)
+
+```mermaid
+flowchart TD
+    PreviewGate["proxy: bloqueio das prévias desabilitadas"] --> Route["app: rota e composição"] --> Public["feature: index público"]
+    Route --> Server["feature: entrada server"]
+    Route --> Config["shared: configuração privada"]
+    Server --> Service["serviço server-only"]
+    Service --> Model["modelo de apresentação"]
+    Public --> Component["componente cliente"]
+    Component --> Hook["hook de estado local"]
+    Hook --> Model
+    Component --> Shared["shared/ui: estados de página"]
+    Component --> UI["bacurim-ui: pacote público"]
+    Shared --> UI
+```
+
+A comunicação servidor → cliente entrega dados serializáveis por props;
+os imports preservam as fronteiras descritas nas ADRs. O código real está
+em features/foundation-demo, features/ui-preview e shared.
+
+Veja o [exemplo executável e o verificador](architecture-example.md).

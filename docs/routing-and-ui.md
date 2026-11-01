@@ -74,3 +74,11 @@ O AppShell da biblioteca já oferece painel móvel, Escape e controle de foco.
 Não reimplemente esse comportamento dentro de uma feature.
 
 Veja [ADR 0004](adr/0004-routing-and-ui-composition.md).
+
+## Bloqueio antes do streaming
+
+src/proxy.ts verifica apenas as flags das duas prévias técnicas e devolve
+404 com no-store antes de iniciar o streaming. As páginas mantêm sua
+verificação no servidor. Isso evita uma resposta 200 de um shell de
+loading para uma prévia desabilitada. O proxy não implementa autenticação
+nem autorização e não intercepta as demais rotas da aplicação.

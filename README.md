@@ -79,6 +79,7 @@ no host por ele; o acesso ocorre pelo Traefik via HTTP.
 | --- | --- |
 | `npm ci` | Instalar exatamente as versões do lockfile |
 | `npm run dev` | Executar o servidor com atualização automática |
+| `npm run check:architecture` | Verificar limites de imports e ciclos |
 | `npm run typecheck` | Gerar tipos das rotas e verificar TypeScript |
 | `npm run build` | Gerar o build otimizado em `.next/` |
 | `npm start` | Servir um build de produção existente |
@@ -86,6 +87,7 @@ no host por ele; o acesso ocorre pelo Traefik via HTTP.
 Antes de entregar alterações executáveis:
 
 ```bash
+npm run check:architecture
 npm run typecheck
 npm run build
 ```
@@ -111,6 +113,7 @@ tem um padrão e não exige credenciais.
 | --- | --- | --- |
 | `APP_URL` | `http://bacurim.mamura.test` | URL absoluta HTTP(S) para os metadados da aplicação |
 | `ENABLE_UI_PREVIEW` | `false` | Libera a prévia técnica em produção apenas quando definido como true |
+| `ENABLE_ARCHITECTURE_PREVIEW` | `false` | Libera o exemplo de arquitetura em produção apenas quando definido como true |
 
 Para usar a URL local como referência, defina `APP_URL=http://localhost:3000`.
 Na produção, configure a URL pública **antes do build**, pois a rota atual
@@ -125,19 +128,21 @@ Veja [as convenções de ambiente e código](docs/conventions.md).
 
 ```text
 src/
-  app/
-    globals.css       # Entrada única dos estilos globais
-    layout.tsx        # Layout raiz, idioma e metadados
-    page.tsx          # Rota inicial temporária
-  shared/config/
-    app.ts            # Parâmetros exclusivos do servidor
-docs/
-  conventions.md      # Ambiente, arquivos, imports e fluxo de entrega
-  decisions.md        # Decisões técnicas da inicialização
+  app/                          # Rotas, layouts e composição
+    (development)/dev/          # Prévias técnicas com URLs /dev/*
+  features/
+    ui-preview/                 # Prévia da biblioteca aprovada
+    foundation-demo/            # Exemplo isolado de arquitetura
+  shared/
+    config/                     # Configuração privada
+    lib/                        # Controle das prévias
+    ui/                         # Loading, error e empty
+scripts/check-architecture.mjs   # Verificação dos limites e ciclos
+docs/adr/                       # Registros de decisão
 ```
 
 O alias `@/*` aponta para `src/*`. TypeScript opera em modo estrito.
-A arquitetura definitiva por funcionalidades será definida na issue #13.
+A arquitetura por funcionalidades está definida no [guia de arquitetura](docs/architecture.md).
 
 ## Estilos e Bacurim UI
 
@@ -174,3 +179,14 @@ responsiva. Em produção retorna 404 por padrão. Leia o
 [guia de consumo, atualização e validação](docs/bacurim-ui.md) para conhecer
 as convenções e o roteiro de conferência. O tarball versionado em vendor/
 permite instalar a aplicação sem um checkout da biblioteca.
+
+## Validação da arquitetura
+
+A issue #13 e suas sub-issues #14 a #19 estabelecem os limites da aplicação.
+Consulte [o guia de arquitetura](docs/architecture.md), as ADRs e
+[o exemplo executável](docs/architecture-example.md).
+
+Em desenvolvimento, acesse
+[bacurim.mamura.test/dev/architecture](http://bacurim.mamura.test/dev/architecture).
+Teste o filtro local e os cenários Normal, Lista vazia, Carregamento e Erro.
+A rota não depende da API e retorna 404 em produção por padrão.

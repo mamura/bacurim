@@ -10,6 +10,7 @@ Nenhuma variável é obrigatória para executar a página inicial.
 | --- | --- | --- | --- |
 | APP_URL | Servidor | http://bacurim.mamura.test | URL absoluta da aplicação; use a URL pública no build de produção. |
 | ENABLE_UI_PREVIEW | Servidor | false | Habilita /dev/ui em produção somente com o valor true; em desenvolvimento a prévia está disponível. |
+| ENABLE_ARCHITECTURE_PREVIEW | Servidor | false | Habilita /dev/architecture em produção somente com o valor true. |
 
 Variáveis sem prefixo são privadas ao servidor. Nunca reexporte credenciais
 para componentes cliente, propriedades serializadas ou respostas HTTP.
@@ -29,7 +30,8 @@ O cliente HTTP e as variáveis da API serão definidos em sua própria issue.
 - Código da aplicação em `src/`, com arquivos TypeScript (`.ts` ou `.tsx`).
 - `src/app/` contém as rotas e os arquivos especiais do App Router.
 - `src/shared/config/app.ts` reúne os parâmetros iniciais usados no servidor.
-- Alias `@/*` aponta para `src/*`; exemplo: `@shared/config/app`.
+- `@/*` aponta para `src/*`; `@features/*` e `@shared/*` são os namespaces dos módulos.
+- Imports externos às features usam apenas suas entradas públicas.
 - Arquivos comuns usam kebab-case; componentes exportados usam PascalCase.
 - Preserve os nomes reservados do Next.js: `page.tsx`, `layout.tsx`, etc.
 - Use UTF-8, LF e dois espaços, conforme `.editorconfig`.
@@ -37,14 +39,14 @@ O cliente HTTP e as variáveis da API serão definidos em sua própria issue.
 - Componentes são Server Components por padrão. Use `"use client"` quando
   houver necessidade concreta de interatividade no navegador.
 
-A arquitetura por funcionalidades será definida na issue #13; não crie
-camadas ou pastas vazias antecipadamente. Componentes e tokens visuais
+A arquitetura por funcionalidades está definida em [architecture.md](architecture.md).
+Não crie camadas ou pastas vazias antecipadamente. Componentes e tokens visuais
 compartilhados pertencem ao Bacurim UI.
 
 ## Entrega de cada tarefa
 
 Implemente uma sub-issue por vez. Valide os tipos e o build quando houver
-mudança executável, revise o diff, crie um commit com referência à issue
+mudança executável, execute check:architecture, revise o diff, crie um commit com referência à issue
 e faça push antes de iniciar a próxima. Alterações apenas documentais
 exigem conferir comandos, caminhos e consistência com a configuração.
 

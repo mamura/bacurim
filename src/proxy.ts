@@ -1,0 +1,25 @@
+import { NextResponse, type NextRequest } from "next/server";
+
+import { isDevelopmentPreviewEnabled } from "@shared/lib/development-preview";
+
+export function proxy(request: NextRequest) {
+  const preview = request.nextUrl.pathname.startsWith("/dev/ui")
+    ? "ui"
+    : "architecture";
+
+  if (!isDevelopmentPreviewEnabled(preview)) {
+    return new NextResponse("Not found", {
+      status: 404,
+      headers: {
+        "Cache-Control": "no-store",
+        "X-Robots-Tag": "noindex, nofollow",
+      },
+    });
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ["/dev/ui/:path*", "/dev/architecture/:path*"],
+};

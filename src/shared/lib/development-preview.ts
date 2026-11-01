@@ -2,7 +2,9 @@ import "server-only";
 
 type DevelopmentPreview = "ui" | "architecture";
 
-export function isDevelopmentPreviewEnabled(preview: DevelopmentPreview): boolean {
+export function isDevelopmentPreviewEnabled(
+  preview: DevelopmentPreview,
+): boolean {
   if (process.env.NODE_ENV === "development") return true;
 
   return preview === "ui"

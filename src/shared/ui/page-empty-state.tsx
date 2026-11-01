@@ -12,7 +12,11 @@ interface PageEmptyStateProps {
   children?: ReactNode;
 }
 
-export function PageEmptyState({ title, description, children }: PageEmptyStateProps) {
+export function PageEmptyState({
+  title,
+  description,
+  children,
+}: PageEmptyStateProps) {
   return (
     <EmptyState>
       <EmptyStateTitle>{title}</EmptyStateTitle>

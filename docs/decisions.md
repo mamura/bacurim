@@ -20,16 +20,15 @@ APP_URL aceita URLs HTTP(S), com padrão para o domínio local.
 O layout define título, descrição, nome da aplicação e idioma pt-BR.
 A configuração usa o alias @/*, resolvido para src/* pelo TypeScript.
 
-A organização por funcionalidades, o estado e a comunicação com a API
-serão definidos nas respectivas issues. Não foram criadas camadas vazias.
+A organização por funcionalidades e o estado estão detalhados nas ADRs
+0001 a 0004 e em architecture.md. A comunicação com a API pertence à issue #20.
 
 ## CSS
 
 Tailwind 4.3.3 com PostCSS, conforme a versão usada pela biblioteca de UI.
 O CSS entra somente pelo layout raiz. Não há configuração JavaScript de
 tema nem tokens locais que dupliquem o Bacurim UI. Preflight é o reset atual.
-A integração futura deve conferir o CSS público da biblioteca e manter
-apenas um reset.
+A integração do CSS público da biblioteca mantém apenas um reset.
 
 ## Ambiente de desenvolvimento
 
