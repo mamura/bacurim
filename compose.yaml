@@ -1,0 +1,25 @@
+services:
+  web:
+    image: node:24-alpine
+    working_dir: /app
+    command: sh -c "npm ci && npm run dev"
+    volumes:
+      - .:/app
+      - web_node_modules:/app/node_modules
+      - web_next:/app/.next
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: dev-network
+      traefik.http.routers.bacurim-web.rule: "Host(`bacurim.mamura.test`)"
+      traefik.http.routers.bacurim-web.entrypoints: web
+      traefik.http.services.bacurim-web.loadbalancer.server.port: "3000"
+    networks:
+      - dev-network
+
+volumes:
+  web_node_modules:
+  web_next:
+
+networks:
+  dev-network:
+    external: true
