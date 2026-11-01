@@ -77,7 +77,7 @@ Veja [ADR 0004](adr/0004-routing-and-ui-composition.md).
 
 ## Bloqueio antes do streaming
 
-src/proxy.ts verifica apenas as flags das duas prévias técnicas e devolve
+src/proxy.ts verifica apenas as flags das três prévias técnicas e devolve
 404 com no-store antes de iniciar o streaming. As páginas mantêm sua
 verificação no servidor. Isso evita uma resposta 200 de um shell de
 loading para uma prévia desabilitada. O proxy não implementa autenticação

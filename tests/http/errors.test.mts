@@ -39,6 +39,7 @@ test("uses HTTP status as authority and maps Problem Details to safe errors", as
       assert.equal(error.code, "example.conflict");
       assert(!error.message.includes("secret"));
       const view = toApiErrorView(error);
+      assert.equal(Object.getPrototypeOf(view.fieldErrors), Object.prototype);
       assert(!JSON.stringify(view).includes("private"));
       assert(!JSON.stringify(view).includes("credentials"));
       assert.equal(

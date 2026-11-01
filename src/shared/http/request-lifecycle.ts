@@ -99,3 +99,17 @@ export function getRetryDelay(
   }
   return Math.min(baseDelay * 2 ** attempt, 1000);
 }
+
+export function createRequestId(
+  source: {
+    randomUUID?: () => string;
+    getRandomValues: (array: Uint8Array) => Uint8Array;
+  } = globalThis.crypto,
+): string {
+  return (
+    source.randomUUID?.() ??
+    Array.from(source.getRandomValues(new Uint8Array(16)), (value) =>
+      value.toString(16).padStart(2, "0"),
+    ).join("")
+  );
+}

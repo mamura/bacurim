@@ -1,6 +1,6 @@
 # ADR 0003 — Composição no servidor e interatividade no cliente
 
-Status: adotada na implementação da issue #13; validação do usuário pendente.
+Status: adotada e validada pelo usuário na issue #13.
 
 ## Contexto
 

@@ -103,3 +103,37 @@ test("separate mock transports do not share scenario or mutate global fetch", as
   );
   assert.deepEqual((await good.request("health")).data, { status: "ok" });
 });
+
+test("server adapter activates mock transport only under an explicit test policy", async () => {
+  const { createServerApiClient } =
+    await import("../../src/shared/http/server.ts");
+  const keys = [
+    "NODE_ENV",
+    "API_MOCKS_ENABLED",
+    "API_MOCK_SCENARIO",
+    "API_BASE_URL",
+  ] as const;
+  const previous = Object.fromEntries(
+    keys.map((key) => [key, process.env[key]]),
+  );
+  Object.assign(process.env, {
+    NODE_ENV: "test",
+    API_MOCKS_ENABLED: "true",
+    API_MOCK_SCENARIO: "success",
+    API_BASE_URL: "https://unreachable.invalid/api/v1",
+  });
+  try {
+    const client = await createServerApiClient();
+    assert.deepEqual((await client.request("health")).data, { status: "ok" });
+    Object.assign(process.env, { NODE_ENV: "production" });
+    await assert.rejects(
+      createServerApiClient(),
+      (error) => error instanceof ApiError && error.kind === "configuration",
+    );
+  } finally {
+    for (const key of keys) {
+      if (previous[key] === undefined) Reflect.deleteProperty(process.env, key);
+      else Object.assign(process.env, { [key]: previous[key] });
+    }
+  }
+});

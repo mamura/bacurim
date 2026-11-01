@@ -1,6 +1,6 @@
 # ADR 0002 — Estado local e política explícita de dados remotos
 
-Status: adotada na implementação da issue #13; validação do usuário pendente.
+Status: adotada e validada pelo usuário na issue #13.
 
 ## Contexto
 

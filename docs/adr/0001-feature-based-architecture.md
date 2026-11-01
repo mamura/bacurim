@@ -1,6 +1,6 @@
 # ADR 0001 — Organização por funcionalidades
 
-Status: adotada na implementação da issue #13; validação do usuário pendente.
+Status: adotada e validada pelo usuário na issue #13.
 
 ## Contexto
 

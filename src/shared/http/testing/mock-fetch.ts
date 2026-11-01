@@ -50,8 +50,12 @@ export function createApiMockFetch(
       });
     }
     const scenarioStatuses: Partial<Record<ApiMockScenario, number>> = {
-      validation: 422, unauthenticated: 401, forbidden: 403, "not-found": 404,
-      conflict: 409, "server-error": 500,
+      validation: 422,
+      unauthenticated: 401,
+      forbidden: 403,
+      "not-found": 404,
+      conflict: 409,
+      "server-error": 500,
     };
     const status = scenarioStatuses[scenario];
     if (status) return problem(status, url.pathname);

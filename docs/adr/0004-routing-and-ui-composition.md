@@ -1,6 +1,6 @@
 # ADR 0004 — Rotas leves e composições de estados de página
 
-Status: adotada na implementação da issue #13; validação do usuário pendente.
+Status: adotada e validada pelo usuário na issue #13.
 
 ## Contexto
 

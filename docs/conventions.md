@@ -23,7 +23,7 @@ Não existe variável pública necessária nesta etapa. Não configure `env`
 em `next.config.ts` para repassar valores privados ao navegador.
 
 Apenas `.env.example` deve ser versionado. Não inclua credenciais reais nele.
-O cliente HTTP e as variáveis da API serão definidos em sua própria issue.
+O cliente HTTP e suas variáveis estão definidos no [guia HTTP](http-client.md).
 
 ## Arquivos e imports
 
@@ -54,3 +54,7 @@ Trabalhe diretamente na branch master, sem branches auxiliares ou PRs.
 Conclua a implementação da issue principal e de suas sub-issues e aguarde
 a validação do usuário. Feche as issues somente após essa aprovação e
 então avance para a próxima issue principal.
+
+As variáveis API_BASE_URL, API_TIMEOUT_MS, API_MOCKS_ENABLED e API_MOCK_SCENARIO
+são privadas. ENABLE_HTTP_PREVIEW controla a terceira prévia técnica em
+produção. Veja [a tabela completa de comunicação](http-client.md).

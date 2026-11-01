@@ -118,3 +118,9 @@ os imports preservam as fronteiras descritas nas ADRs. O código real está
 em features/foundation-demo, features/ui-preview e shared.
 
 Veja o [exemplo executável e o verificador](architecture-example.md).
+
+## Comunicação HTTP
+
+A infraestrutura neutra fica em shared/http. A feature api-status usa a
+entrada server-only e valida seu próprio modelo; a rota apenas compõe a
+página. Veja o [guia HTTP](http-client.md) e a [ADR 0005](adr/0005-http-communication.md).

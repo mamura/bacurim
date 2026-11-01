@@ -184,3 +184,38 @@ test("server adapter applies the private timeout configuration", async () => {
     else process.env.API_TIMEOUT_MS = previous;
   }
 });
+
+test("one deadline also bounds retry backoff and invalid policies are rejected before fetch", async () => {
+  let calls = 0;
+  const client = createHttpClient({
+    baseUrl: "https://api.example.test/api/v1",
+    timeoutMs: 25,
+    retries: 2,
+    retryDelayMs: 500,
+    fetch: async () => {
+      calls++;
+      return Response.json({}, { status: 503 });
+    },
+  });
+  await assert.rejects(
+    client.request("health"),
+    (error) => error instanceof ApiError && error.kind === "timeout",
+  );
+  assert.equal(calls, 1);
+  for (const timeoutMs of [0, -1, Number.NaN, 120001]) {
+    await assert.rejects(
+      client.request("health", { timeoutMs }),
+      (error) => error instanceof ApiError && error.kind === "configuration",
+    );
+  }
+  assert.equal(calls, 1);
+});
+
+test("correlation works when secure-context randomUUID is unavailable", async () => {
+  const { createRequestId } =
+    await import("../../src/shared/http/request-lifecycle.ts");
+  const id = createRequestId({
+    getRandomValues: (array) => crypto.getRandomValues(array),
+  });
+  assert.match(id, /^[a-f0-9]{32}$/);
+});

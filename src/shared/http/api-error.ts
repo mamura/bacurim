@@ -77,6 +77,11 @@ export function toApiErrorView(error: unknown): ApiErrorView {
     status: known.status,
     code: known.code,
     requestId: known.requestId,
-    fieldErrors: known.fieldErrors,
+    fieldErrors: Object.fromEntries(
+      Object.entries(known.fieldErrors).map(([field, messages]) => [
+        field,
+        [...messages],
+      ]),
+    ),
   };
 }

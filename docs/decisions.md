@@ -21,7 +21,7 @@ O layout define título, descrição, nome da aplicação e idioma pt-BR.
 A configuração usa o alias @/*, resolvido para src/* pelo TypeScript.
 
 A organização por funcionalidades e o estado estão detalhados nas ADRs
-0001 a 0004 e em architecture.md. A comunicação com a API pertence à issue #20.
+0001 a 0004 e em architecture.md. A comunicação HTTP está implementada conforme a ADR 0005 e http-client.md.
 
 ## CSS
 

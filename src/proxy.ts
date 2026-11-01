@@ -5,7 +5,9 @@ import { isDevelopmentPreviewEnabled } from "@shared/lib/development-preview";
 export function proxy(request: NextRequest) {
   const preview = request.nextUrl.pathname.startsWith("/dev/ui")
     ? "ui"
-    : "architecture";
+    : request.nextUrl.pathname.startsWith("/dev/architecture")
+      ? "architecture"
+      : "http";
 
   if (!isDevelopmentPreviewEnabled(preview)) {
     return new NextResponse("Not found", {
@@ -21,5 +23,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dev/ui/:path*", "/dev/architecture/:path*"],
+  matcher: ["/dev/ui/:path*", "/dev/architecture/:path*", "/dev/http/:path*"],
 };

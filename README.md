@@ -80,6 +80,8 @@ no host por ele; o acesso ocorre pelo Traefik via HTTP.
 | `npm ci` | Instalar exatamente as versões do lockfile |
 | `npm run dev` | Executar o servidor com atualização automática |
 | `npm run check:architecture` | Verificar limites de imports e ciclos |
+| `npm run test:http` | Executar testes HTTP independentes da API real |
+| `npm run test:http:integration` | Testar Laravel com API_INTEGRATION_URL explícita |
 | `npm run typecheck` | Gerar tipos das rotas e verificar TypeScript |
 | `npm run build` | Gerar o build otimizado em `.next/` |
 | `npm start` | Servir um build de produção existente |
@@ -87,6 +89,7 @@ no host por ele; o acesso ocorre pelo Traefik via HTTP.
 Antes de entregar alterações executáveis:
 
 ```bash
+npm run test:http
 npm run check:architecture
 npm run typecheck
 npm run build
@@ -101,7 +104,7 @@ npm start
 
 Não execute `dev` e `build` simultaneamente sobre o mesmo diretório de
 saída. O container mantém seu próprio cache, separado do build no host.
-Lint, testes automatizados e CI serão configurados nas issues específicas.
+Os testes HTTP estão disponíveis. Lint, testes React e CI serão configurados nas issues específicas.
 
 ## Ambiente
 
@@ -114,6 +117,11 @@ tem um padrão e não exige credenciais.
 | `APP_URL` | `http://bacurim.mamura.test` | URL absoluta HTTP(S) para os metadados da aplicação |
 | `ENABLE_UI_PREVIEW` | `false` | Libera a prévia técnica em produção apenas quando definido como true |
 | `ENABLE_ARCHITECTURE_PREVIEW` | `false` | Libera o exemplo de arquitetura em produção apenas quando definido como true |
+| `ENABLE_HTTP_PREVIEW` | `false` | Libera a prévia de comunicação em produção apenas com true |
+| `API_BASE_URL` | `http://api-bacurim.mamura.test/api/v1` | URL privada; Compose usa o hostname interno api-bacurim |
+| `API_TIMEOUT_MS` | `10000` | Deadline da requisição em ms |
+| `API_MOCKS_ENABLED` | `false` | Habilita mocks apenas em desenvolvimento/testes |
+| `API_MOCK_SCENARIO` | `success` | Cenário quando os mocks estão habilitados |
 
 Para usar a URL local como referência, defina `APP_URL=http://localhost:3000`.
 Na produção, configure a URL pública **antes do build**, pois a rota atual
@@ -190,3 +198,18 @@ Em desenvolvimento, acesse
 [bacurim.mamura.test/dev/architecture](http://bacurim.mamura.test/dev/architecture).
 Teste o filtro local e os cenários Normal, Lista vazia, Carregamento e Erro.
 A rota não depende da API e retorna 404 em produção por padrão.
+
+## Validação da comunicação HTTP
+
+A issue #20 e suas sub-issues #21 a #26 implementam o cliente fetch,
+contratos, erros, timeout/cancelamento, retry seguro e mocks explícitos.
+
+Em desenvolvimento, acesse
+[bacurim.mamura.test/dev/http](http://bacurim.mamura.test/dev/http).
+A prévia lê o health check pelo serviço da feature api-status. Sem a API
+disponível, a página inicial continua funcionando e a prévia apresenta
+uma falha segura; os testes e mocks independem da API real.
+
+Veja [o guia HTTP](docs/http-client.md) para configurar URLs, executar
+a integração real e conferir os cenários simulados. Mocks são rejeitados
+no build/start de produção. Nenhum fluxo de autenticação está implementado.

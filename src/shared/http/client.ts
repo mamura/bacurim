@@ -3,6 +3,7 @@ import { safeRequestId } from "./problem-details.ts";
 import { readHttpError } from "./read-http-error.ts";
 import {
   createRequestScope,
+  createRequestId,
   getRetryDelay,
   validateInteger,
   waitForRetry,
@@ -79,7 +80,7 @@ export function createHttpClient(config: HttpClientConfig): HttpClient {
         );
         if (body !== undefined) headers.set("Content-Type", "application/json");
         requestId =
-          safeRequestId(headers.get("X-Request-ID")) ?? crypto.randomUUID();
+          safeRequestId(headers.get("X-Request-ID")) ?? createRequestId();
         headers.set("X-Request-ID", requestId);
 
         for (let attempt = 0; ; attempt++) {
