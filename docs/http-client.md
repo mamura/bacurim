@@ -58,3 +58,36 @@ A conexão ao backend não altera seu contrato nem exige mudanças na API.
 Não há SDK público, endpoint financeiro ou fluxo de autenticação nesta etapa.
 
 Ver [ADR 0005](adr/0005-http-communication.md).
+
+## Cliente e configuração (#22)
+
+A entrada @shared/http exporta createHttpClient e os contratos. O adaptador
+@shared/http/server cria uma instância por request com API_BASE_URL.
+O núcleo aceita um transport fetch injetável, sem alterar o fetch global.
+
+request<TResponse, TBody>(path, options) suporta GET, POST, PUT, PATCH e
+DELETE. O resultado contém status, headers e data (possivelmente undefined
+para 204 ou corpo vazio). O cliente preserva envelopes e não converte valores.
+Os serviços devem validar o modelo recebido; o generic é apenas uma garantia
+estática para o código consumidor.
+
+Use caminhos relativos à base, como health ou /examples. Query aceita
+URLSearchParams ou objeto de valores escalares/arrays; null e undefined
+são omitidos. Filtros Laravel usam chaves como filter[status].
+Destinos externos, credenciais embutidas na URL e caminhos que escapem da
+base são rejeitados. Redirects HTTP não são seguidos.
+
+Accept inclui JSON e Problem Details; Content-Type JSON é enviado somente
+quando há body. O cliente usa no-store e credentials:omit por padrão.
+Não há encaminhamento automático de cookies do request do navegador.
+
+No WSL, API_BASE_URL pode usar http://api-bacurim.mamura.test/api/v1.
+O Compose usa por padrão http://api-bacurim/api/v1, resolvido na rede Docker.
+Para alterar no Compose, defina API_BASE_URL no ambiente do comando ou no
+arquivo .env do Compose; esse valor tem precedência sobre .env.local.
+Nenhuma conexão é aberta durante o build ou ao renderizar a página inicial.
+
+npm run test:http usa o runner do Node 24 e tipos removíveis. Os imports
+relativos do núcleo terminam em .ts, com allowImportingTsExtensions e
+noEmit no TypeScript. Os testes também são verificados por typecheck.
+A configuração completa de Vitest/React será feita na issue #27.

@@ -2,6 +2,8 @@ services:
   web:
     image: node:24-alpine
     working_dir: /app
+    environment:
+      API_BASE_URL: ${API_BASE_URL:-http://api-bacurim/api/v1}
     command: sh -c "npm ci && npm run dev"
     volumes:
       - .:/app
