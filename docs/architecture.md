@@ -83,3 +83,7 @@ para src/*, mas não permite ignorar os limites arquiteturais.
 Nomes de diretório e arquivo usam kebab-case. Componentes e tipos exportados
 usam PascalCase; hooks usam useNome. Os nomes especiais page.tsx, layout.tsx,
 loading.tsx e error.tsx seguem as convenções do App Router.
+
+## Estado (#16)
+
+Veja a [estratégia de estado](state-management.md) e a [ADR 0002](adr/0002-state-management.md).
