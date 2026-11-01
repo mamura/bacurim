@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { UiPreview } from "./ui-preview";
+import { UiPreview } from "@features/ui-preview";
 
 export const dynamic = "force-dynamic";
 

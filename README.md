@@ -129,7 +129,7 @@ src/
     globals.css       # Entrada única dos estilos globais
     layout.tsx        # Layout raiz, idioma e metadados
     page.tsx          # Rota inicial temporária
-  config/
+  shared/config/
     app.ts            # Parâmetros exclusivos do servidor
 docs/
   conventions.md      # Ambiente, arquivos, imports e fluxo de entrega

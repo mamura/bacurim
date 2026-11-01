@@ -28,8 +28,8 @@ O cliente HTTP e as variáveis da API serão definidos em sua própria issue.
 
 - Código da aplicação em `src/`, com arquivos TypeScript (`.ts` ou `.tsx`).
 - `src/app/` contém as rotas e os arquivos especiais do App Router.
-- `src/config/app.ts` reúne os parâmetros iniciais usados no servidor.
-- Alias `@/*` aponta para `src/*`; exemplo: `@/config/app`.
+- `src/shared/config/app.ts` reúne os parâmetros iniciais usados no servidor.
+- Alias `@/*` aponta para `src/*`; exemplo: `@shared/config/app`.
 - Arquivos comuns usam kebab-case; componentes exportados usam PascalCase.
 - Preserve os nomes reservados do Next.js: `page.tsx`, `layout.tsx`, etc.
 - Use UTF-8, LF e dois espaços, conforme `.editorconfig`.

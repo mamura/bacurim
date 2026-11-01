@@ -1,6 +1,6 @@
 import { Badge } from "bacurim-ui";
 
-import { appConfig } from "@/config/app";
+import { appConfig } from "@shared/config/app";
 
 export default function Home() {
   return (

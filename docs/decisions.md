@@ -14,7 +14,7 @@ no Bacurim UI. Use npm ci para reproduzir a instalação.
 A aplicação usa src/app para rotas, layout raiz e estilos globais.
 A página inicial é um Server Component pré-renderizado, sem cliente HTTP
 ou dependência da API. A configuração compartilhada pelo layout e pela
-página fica em src/config/app.ts, protegida por server-only.
+página fica em src/shared/config/app.ts, protegida por server-only.
 
 APP_URL aceita URLs HTTP(S), com padrão para o domínio local.
 O layout define título, descrição, nome da aplicação e idioma pt-BR.

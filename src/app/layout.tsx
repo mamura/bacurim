@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
-import "@/app/globals.css";
-import { appConfig } from "@/config/app";
+import "./globals.css";
+import { appConfig } from "@shared/config/app";
 
 export const metadata: Metadata = {
   metadataBase: appConfig.url,

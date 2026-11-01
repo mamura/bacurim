@@ -52,3 +52,34 @@ consomem contratos da API sem reconstruir cálculos de saldo, realização,
 projeção, isolamento de tenant ou autorização.
 
 Veja [ADR 0001](adr/0001-feature-based-architecture.md).
+
+## Estrutura e entradas públicas (#15)
+
+| Diretório | Responsabilidade |
+| --- | --- |
+| src/app | URLs, metadados, layouts, estados da rota e composição |
+| src/features/<nome>/components | Apresentação e composição interna da funcionalidade |
+| src/features/<nome>/hooks | Estado e comportamento reutilizado dentro da funcionalidade |
+| src/features/<nome>/services | Acesso a dados e adaptação para modelos de apresentação |
+| src/features/<nome>/model | Tipos e transformações puras específicos da funcionalidade |
+| src/shared/config | Parâmetros neutros da aplicação, com proteção server-only quando privados |
+| src/shared/ui | Composições neutras de UI; sem cópia de primitivos da biblioteca |
+| src/shared/lib | Utilidades com responsabilidade concreta e consumidores reais |
+
+Crie as subpastas somente quando houver arquivos. O módulo ui-preview é
+uma ferramenta técnica, não uma funcionalidade financeira nem parte do
+App Shell definitivo. Ele contém a prévia aprovada da biblioteca.
+
+Use @features/<nome> para a entrada pública index.ts de apresentação,
+@features/<nome>/server para acesso exclusivo do servidor e
+@features/<nome>/types para tipos públicos quando necessário.
+Não reexporte serviços server-only no barrel que expõe componentes cliente.
+Dentro da mesma feature, use imports relativos.
+
+Use @shared/<área>/<módulo> para arquivos compartilhados com propósito
+explícito. Não crie um barrel geral de shared. O alias @/* continua apontando
+para src/*, mas não permite ignorar os limites arquiteturais.
+
+Nomes de diretório e arquivo usam kebab-case. Componentes e tipos exportados
+usam PascalCase; hooks usam useNome. Os nomes especiais page.tsx, layout.tsx,
+loading.tsx e error.tsx seguem as convenções do App Router.
