@@ -91,3 +91,26 @@ npm run test:http usa o runner do Node 24 e tipos removíveis. Os imports
 relativos do núcleo terminam em .ts, com allowImportingTsExtensions e
 noEmit no TypeScript. Os testes também são verificados por typecheck.
 A configuração completa de Vitest/React será feita na issue #27.
+
+## Erros (#23)
+
+ApiError distingue HTTP, rede, resposta inválida e configuração.
+O status HTTP é a autoridade mesmo quando o corpo informa outro status.
+Problem Details é reconhecido pelo media type; code e campos de validação
+são normalizados, e extensões desconhecidas são descartadas.
+
+Erros 401/403/404/409/422/429 têm mensagens locais adequadas. Erros internos
+usam uma mensagem genérica. Não refletimos title, detail, HTML ou mensagens
+de exceções nativas no objeto de apresentação. Para serializar um erro,
+use toApiErrorView; não envie a exceção inteira ao cliente.
+
+fieldErrors preserva os nomes de campo, inclusive items.0.label, somente
+em respostas 422. Mensagens de validação seguem o contrato público do
+backend, com limites de quantidade/tamanho e proteção de chaves especiais.
+Não interpolar essas mensagens como HTML. O adaptador não retorna valores
+submetidos e não usa texto de erro para decidir regras de negócio.
+
+Falhas de parse em um erro mantêm sua categoria HTTP e mensagem segura.
+Uma resposta 2xx com JSON inválido ou conteúdo inesperado é invalid-response.
+Cabeçalhos X-Request-ID válidos são preservados quando fornecidos pela API;
+nenhum identificador é exigido do backend atual.

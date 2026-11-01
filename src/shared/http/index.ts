@@ -1,5 +1,5 @@
 export { createHttpClient } from "./client.ts";
-export { ApiError } from "./api-error.ts";
+export { ApiError, toApiErrorView } from "./api-error.ts";
 export type { ApiErrorKind } from "./api-error.ts";
 export type {
   HttpClient,
@@ -14,3 +14,5 @@ export type {
   ApiPaginatedCollection,
   HealthResponse,
 } from "./contracts.ts";
+export type { ApiErrorView } from "./api-error.ts";
+export type { ProblemDetails } from "./problem-details.ts";

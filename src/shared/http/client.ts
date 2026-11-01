@@ -1,4 +1,5 @@
 import { ApiError } from "./api-error.ts";
+import { readHttpError } from "./read-http-error.ts";
 import { buildRequestUrl, normalizeApiBaseUrl } from "./url.ts";
 import type { HttpClient, HttpClientConfig } from "./types.ts";
 
@@ -46,7 +47,7 @@ export function createHttpClient(config: HttpClientConfig): HttpClient {
       } catch {
         throw new ApiError("network");
       }
-      if (!response.ok) throw new ApiError("http", { status: response.status });
+      if (!response.ok) throw await readHttpError(response);
       if (response.status === 204)
         return {
           status: response.status,
