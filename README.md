@@ -1,77 +1,163 @@
 # Bacurim
 
-Frontend com Next.js, React, TypeScript estrito e App Router.
+Frontend do Bacurim. Esta base implementa a inicialização da aplicação
+(issue #1, sub-issues #2 a #6), com uma página temporária independente da API.
 
-## Desenvolvimento
+## Requisitos
 
-Execute no WSL com Node.js 24 LTS e npm 10 ou superior:
+| Ferramenta | Versão |
+| --- | --- |
+| Node.js | 24 LTS (use `.nvmrc`) |
+| npm | 10 ou superior |
+| Git | Disponível no ambiente |
+| Docker e Compose | Necessários apenas para executar com Traefik |
+
+Execute os comandos no Linux/WSL, dentro de `bacurim-web`.
+Use apenas um modo de desenvolvimento por vez.
+
+## Instalação e execução local
 
 ```bash
+git clone https://github.com/mamura/bacurim.git bacurim-web
+cd bacurim-web
+nvm install
 nvm use
 npm ci
+cp .env.example .env.local
 npm run dev
 ```
 
-Acesse http://localhost:3000. A página inicial funciona sem a API.
+Se já possui o checkout, entre nele e comece em `nvm install`.
+O comando `nvm` requer o Node Version Manager instalado no shell.
+Sem nvm, instale Node 24 por outro meio.
 
-## Validação e produção
+Acesse [localhost:3000](http://localhost:3000). O servidor escuta em
+`0.0.0.0` para permitir acesso pelo ambiente WSL.
+A API, PostgreSQL e Redis não são necessários para a página inicial.
 
-```bash
-npm run typecheck
-npm run build
-npm start
-```
+## Desenvolvimento com Docker e Traefik
 
-## Estrutura inicial
-
-- `src/app/layout.tsx`: layout raiz do App Router.
-- `src/app/page.tsx`: rota inicial temporária.
-- `next.config.ts`: configuração e origem local permitida.
-- `tsconfig.json`: TypeScript estrito e alias `@/*` para `src/*`.
-
-Implementação das issues #2 e #3, parte da issue #1. Ambiente (#4),
-metadados (#5) e documentação consolidada (#6) serão tratados
-separadamente. Integração com Bacurim UI pertence à issue #7.
-
-## Desenvolvimento com Traefik
-
-Com Docker Compose e o Traefik existente conectado à rede `dev-network`:
+O Compose do frontend é independente do Compose da pasta pai.
+Ele requer o Traefik existente com entrypoint HTTP `web`, provider Docker
+e conexão à rede externa `dev-network`. O arquivo não cria o proxy.
 
 ```bash
+cp .env.example .env.local
+docker network inspect dev-network
+docker compose config --quiet
 docker compose up -d
 docker compose logs -f web
 ```
 
-Após a instalação das dependências, acesse http://bacurim.mamura.test.
-O domínio deve resolver para a máquina do Docker (por exemplo, uma entrada
-`127.0.0.1 bacurim.mamura.test` no arquivo hosts). O roteador utiliza o
-entrypoint HTTP `web` existente. O Compose roda somente o frontend, sem
-exigir os serviços da API. Dependências e cache ficam em volumes próprios.
+Acesse [bacurim.mamura.test](http://bacurim.mamura.test) após a instalação
+das dependências e a mensagem de que o Next.js está pronto.
+O domínio deve resolver para a máquina do Docker. Para um ambiente local,
+configure `127.0.0.1 bacurim.mamura.test` no arquivo hosts do sistema em que
+o navegador está executando (no Windows: `C:\Windows\System32\drivers\etc\hosts`).
 
-Para parar este ambiente:
+O container usa Node 24 e executa `npm ci && npm run dev`.
+Os arquivos são montados para atualização automática; dependências e
+cache ficam nos volumes `web_node_modules` e `web_next`.
+Após alterar dependências ou configurações de ambiente, reinicie:
+
+```bash
+docker compose restart web
+```
+
+Para parar o frontend, preservando os volumes:
 
 ```bash
 docker compose down
 ```
 
+Este Compose é exclusivo de desenvolvimento. A porta 3000 não é publicada
+no host por ele; o acesso ocorre pelo Traefik via HTTP.
 
-## Estilos globais e Tailwind CSS
+## Comandos de validação e produção
 
-O Tailwind CSS 4.3.3 usa o plugin `@tailwindcss/postcss`, configurado em
-`postcss.config.mjs`. A versão acompanha a utilizada no Bacurim UI.
-`src/app/globals.css` concentra os imports globais e é carregado uma única
-vez pelo layout raiz, usando o alias `@/`.
+| Comando | Finalidade |
+| --- | --- |
+| `npm ci` | Instalar exatamente as versões do lockfile |
+| `npm run dev` | Executar o servidor com atualização automática |
+| `npm run typecheck` | Gerar tipos das rotas e verificar TypeScript |
+| `npm run build` | Gerar o build otimizado em `.next/` |
+| `npm start` | Servir um build de produção existente |
 
-As classes são detectadas nos arquivos da aplicação automaticamente.
-A rota temporária usa utilitários de espaçamento, tipografia e responsividade
-para validar a geração do CSS.
+Antes de entregar alterações executáveis:
 
-Os tokens de cores, fontes, espaçamento, radius e shadows pertencem ao
-Bacurim UI. Não copie os arquivos de foundations nem crie valores
-equivalentes na aplicação. O import público do CSS da biblioteca e as
-fontes serão configurados na integração (#7 e #10), após definir os
-exports do pacote. Até lá, a aplicação usa os utilitários padrão do Tailwind.
+```bash
+npm run typecheck
+npm run build
+```
 
-Preflight é o único reset atual. Na integração, verifique o CSS distribuído
-pela biblioteca para manter apenas um reset e defina a ordem dos imports
-globais aqui. Não importe o código-fonte do repositório vizinho.
+Para verificar a execução de produção local, pare o servidor de
+desenvolvimento que usa a porta 3000 e execute:
+
+```bash
+npm start
+```
+
+Não execute `dev` e `build` simultaneamente sobre o mesmo diretório de
+saída. O container mantém seu próprio cache, separado do build no host.
+Lint, testes automatizados e CI serão configurados nas issues específicas.
+
+## Ambiente
+
+`.env.example` é a referência versionada; `.env.local` contém os valores
+locais e é ignorado pelo Git. Sua criação é opcional: a configuração atual
+tem um padrão e não exige credenciais.
+
+| Variável | Padrão | Uso |
+| --- | --- | --- |
+| `APP_URL` | `http://bacurim.mamura.test` | URL absoluta HTTP(S) para os metadados da aplicação |
+
+Para usar a URL local como referência, defina `APP_URL=http://localhost:3000`.
+Na produção, configure a URL pública **antes do build**, pois a rota atual
+é pré-renderizada. Alterar esse valor depois exige gerar outro build.
+
+Variáveis sem prefixo são do servidor. `NEXT_PUBLIC_*` identifica valores
+públicos incorporados no JavaScript durante o build; nunca use esse prefixo
+para credenciais. Não há variável pública necessária nesta etapa.
+Veja [as convenções de ambiente e código](docs/conventions.md).
+
+## Estrutura
+
+```text
+src/
+  app/
+    globals.css       # Entrada única dos estilos globais
+    layout.tsx        # Layout raiz, idioma e metadados
+    page.tsx          # Rota inicial temporária
+  config/
+    app.ts            # Parâmetros exclusivos do servidor
+docs/
+  conventions.md      # Ambiente, arquivos, imports e fluxo de entrega
+  decisions.md        # Decisões técnicas da inicialização
+```
+
+O alias `@/*` aponta para `src/*`. TypeScript opera em modo estrito.
+A arquitetura definitiva por funcionalidades será definida na issue #13.
+
+## Estilos e Bacurim UI
+
+Tailwind CSS 4.3.3 é processado pelo plugin `@tailwindcss/postcss`.
+O layout importa `src/app/globals.css` uma única vez. Tailwind fornece
+o único reset atual (Preflight); a página temporária usa seus utilitários
+de layout e tipografia, incluindo um breakpoint responsivo.
+
+A versão é compatível com a usada no Bacurim UI. A integração do pacote,
+dos tokens e das fontes Poppins e Inter ocorrerá nas issues #7 a #12.
+Não copie componentes ou foundations do repositório vizinho. Os imports
+públicos e a estratégia de distribuição serão definidos nessa integração.
+Ao integrá-lo, confira a ordem dos estilos e evite duplicar o reset.
+
+## Resolução de problemas
+
+- Node incompatível: rode `nvm use` antes de instalar ou executar comandos.
+- Domínio não abre: confira o hosts, o Traefik e a rede `dev-network`.
+- Resposta 502 logo após iniciar: confira os logs; o primeiro `npm ci`
+  precisa terminar antes de o servidor receber requisições.
+- Dependência nova não encontrada no container: execute
+  `docker compose restart web` para reinstalar a partir do lockfile.
+- Porta 3000 ocupada no modo local: pare o processo anterior ou use
+  `npm run dev -- --port 3001`.
