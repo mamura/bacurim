@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/*
+ * Loaded once by the root layout. Tailwind provides the only reset.
+ * Bacurim UI owns the design tokens. Import its public CSS here during
+ * package integration; do not copy its foundations into this application.
+ */
