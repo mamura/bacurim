@@ -32,7 +32,7 @@ export default defineConfig({
         test: {
           name: "server",
           environment: "node",
-          include: ["tests/server/**/*.test.ts"],
+          include: ["tests/server/**/*.test.ts", "tests/http/**/*.test.mts"],
           exclude: ["tests/http/api-integration.test.mts"],
           setupFiles: ["./tests/setup/server.ts"],
           clearMocks: true,

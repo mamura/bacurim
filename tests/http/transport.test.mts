@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
-import test from "node:test";
+import { test } from "vitest";
 
 import { createHttpClient } from "../../src/shared/http/client.ts";
 import { ApiError } from "../../src/shared/http/api-error.ts";

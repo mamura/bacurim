@@ -29,3 +29,11 @@ Ao adicionar um formulário, teste digitação, envio, bloqueio durante envio, v
 `npm test` executa uma vez; `npm run test:watch` acompanha alterações. Um teste que falha deve encerrar o comando com código diferente de zero. Antes de enviar alterações, execute também os controles de arquitetura, tipos e build documentados no README.
 
 Referências: [Vitest no Next.js](https://nextjs.org/docs/app/guides/testing/vitest), [projetos Vitest](https://vitest.dev/guide/projects), [consultas acessíveis](https://testing-library.com/docs/queries/about/).
+
+## Interceptação HTTP nos testes
+
+Use `mockApi(cenario)` de `tests/helpers/mock-api.ts` antes de chamar um serviço. Ele intercepta fetch somente no processo de teste, sem fallback para a rede, e reutiliza os cenários e contratos de `shared/http/testing`. O serviço e o cliente continuam reais; a origem é marcada como real para exercitar o caminho de produção. Globals e ambiente são restaurados pelo setup após cada teste.
+
+Para um contrato novo, acrescente uma resposta ao transporte controlado e teste o serviço com essa fixture. Para respostas malformadas, altere o retorno do spy local com `mockResolvedValue`. Para testes do próprio cliente, prefira injeção direta de fetch. Os testes de transporte usam servidor HTTP efêmero local; a suíte padrão não acessa a API Laravel.
+
+`npm run test:http` executa os contratos HTTP migrados para Vitest. `API_INTEGRATION_URL=http://api-bacurim/api/v1 npm run test:http:integration` executa apenas o teste nativo opcional contra Laravel, dentro da rede Docker.
