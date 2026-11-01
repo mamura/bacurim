@@ -8,5 +8,5 @@ import type { HttpClient, HttpClientConfig } from "./types.ts";
 export function createServerApiClient(
   options: Omit<HttpClientConfig, "baseUrl"> = {},
 ): HttpClient {
-  return createHttpClient({ ...options, baseUrl: getApiBaseUrl() });
+  return createHttpClient({ ...options, baseUrl: getApiBaseUrl(), timeoutMs: options.timeoutMs ?? getApiTimeoutMs() });
 }
