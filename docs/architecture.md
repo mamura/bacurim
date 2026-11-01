@@ -87,3 +87,7 @@ loading.tsx e error.tsx seguem as convenções do App Router.
 ## Estado (#16)
 
 Veja a [estratégia de estado](state-management.md) e a [ADR 0002](adr/0002-state-management.md).
+
+## Renderização (#17)
+
+Veja as [fronteiras de execução](rendering-boundaries.md) e a [ADR 0003](adr/0003-server-client-boundaries.md).
