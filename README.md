@@ -247,4 +247,4 @@ A issue #27 e as sub-issues #28 a #33 foram validadas e encerradas. Para conferi
 
 A issue #34 e as sub-issues #35 a #40 implementam GitHub Actions, qualidade automatizada, build sem API, convenções de contribuição, índice técnico e proteção da master contra exclusão e force push. O fluxo continua com commits e pushes diretos na master; o CI verifica o resultado após o push.
 
-Consulte as [execuções no GitHub Actions](https://github.com/mamura/bacurim/actions) e as [evidências e limites do CI](docs/continuous-integration.md). Para validar localmente, execute npm run check e consulte o índice docs/README.md. Este grupo aguarda validação do mantenedor antes do fechamento das issues.
+Consulte as [execuções no GitHub Actions](https://github.com/mamura/bacurim/actions) e as [evidências e limites do CI](docs/continuous-integration.md). Para validar localmente, execute npm run check e consulte o índice docs/README.md. O grupo foi validado pelo mantenedor e as issues #34 a #40 foram encerradas. O milestone WEB-M0 — Foundation está concluído, com 40 issues finalizadas.
