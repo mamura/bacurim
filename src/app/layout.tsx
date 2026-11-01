@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang={appConfig.locale}>
-      <body>{children}</body>
+      <body className="bg-background font-body text-text-primary">{children}</body>
     </html>
   );
 }
