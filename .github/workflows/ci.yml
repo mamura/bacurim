@@ -34,3 +34,13 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: Install locked dependencies
         run: npm ci
+      - name: Check formatting
+        run: npm run format:check
+      - name: Lint
+        run: npm run lint
+      - name: Check architecture
+        run: npm run check:architecture
+      - name: Check TypeScript
+        run: npm run typecheck
+      - name: Run tests
+        run: npm test
