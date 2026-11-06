@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "bacurim-ui": "file:vendor/bacurim-ui-0.1.0.tgz",
+    "lucide-react": "1.66.0",
     "next": "16.4.3",
     "react": "19.3.1",
     "react-dom": "19.3.1",

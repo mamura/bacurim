@@ -1,7 +1,7 @@
 "use client";
 import { LogoutButton } from "@shared/auth/logout-button";
 import { useSession } from "@shared/auth/session-provider";
-import { useOrganizations } from "@shared/organizations/organization-provider";
+import { useActiveOrganization } from "@shared/organizations/active-organization";
 import {
   organizationPath,
   resolveOrganization,
@@ -17,7 +17,7 @@ import { OrganizationPicker } from "./organization-picker";
 
 export function OrganizationEntry() {
   const { user } = useSession();
-  const state = useOrganizations();
+  const state = useActiveOrganization();
   const router = useRouter();
   const resolution =
     state.status === "ready" && user
@@ -73,7 +73,7 @@ export function OrganizationEntry() {
                   (organization) => organization.public_id === id,
                 )
               )
-                router.push(organizationPath(id));
+                void state.switchOrganization(id);
             }}
           />
         </>
