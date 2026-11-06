@@ -1,10 +1,11 @@
 <?php
-require '/app/vendor/autoload.php';
-$app = require '/app/bootstrap/app.php';
-$app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cache;
+try {
+require '/app/vendor/autoload.php';
+$app = require '/app/bootstrap/app.php';
+$app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
 if (getenv('BACURIM_E2E') !== 'true' || !$app->environment('testing') || config('database.connections.pgsql.host') !== 'database' || DB::connection()->getDatabaseName() !== 'bacurim_test' || config('database.redis.default.host') !== 'cache') {
     throw new RuntimeException('Isolated E2E environment required.');
@@ -16,7 +17,8 @@ if ($action === 'expire') {
 }
 if ($action === 'revoke') {
     $id = DB::table('users')->where('email', 'consultant@e2e.test')->value('id');
-    DB::table('organization_memberships')->where('user_id', $id)->where('organization_id', 1)->update(['status' => 'revoked', 'revoked_at' => now(), 'version' => DB::raw('version + 1')]);
+    $changedAt = now();
+    DB::table('organization_memberships')->where('user_id', $id)->where('organization_id', 1)->update(['status' => 'revoked', 'revoked_at' => $changedAt, 'updated_at' => $changedAt, 'version' => DB::raw('version + 1')]);
     exit(0);
 }
 if ($action !== 'reset') throw new RuntimeException('Unsupported fixture operation.');
@@ -44,3 +46,8 @@ foreach ($accounts as $name => [$profile, $role]) {
     }
 }
 echo "Isolated fixtures ready.\n";
+
+} catch (Throwable $error) {
+    fwrite(STDERR, 'E2E fixture operation failed: '.$error->getMessage().PHP_EOL);
+    exit(1);
+}
