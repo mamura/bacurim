@@ -60,6 +60,7 @@ export function LoginForm({
   }
   return (
     <form
+      aria-label="Entrar"
       onSubmit={submit}
       noValidate
       className="space-y-5"
