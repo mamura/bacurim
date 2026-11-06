@@ -3,6 +3,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expect, test, vi } from "vitest";
 const state = vi.hoisted(() => ({
+  canSwitch: true,
   push: vi.fn(),
   logout: vi.fn(),
   active: {
