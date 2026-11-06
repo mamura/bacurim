@@ -43,3 +43,9 @@ Uma cópia isolada criada por git archive, sem .env.local, node_modules ou arqui
 Falhas controladas de lint, tipos, testes e build foram verificadas localmente em cópia isolada do código versionado; nenhum commit propositalmente quebrado é publicado na master. Esse exercício comprova os códigos de saída dos comandos, mas não representa uma execução remota com falha. O workflow usa a propagação padrão de erros do GitHub Actions, sem continue-on-error.
 
 Não foi tentada uma exclusão ou reescrita real da master para testar as opções de proteção: a evidência é a configuração persistida. Push normal após sua criação confirma a compatibilidade com o fluxo de desenvolvimento.
+
+## Experiência integrada WEB-M1
+
+O workflow E2E adiciona o job Integrated experience em pushes/PRs para master e acionamento manual. Ele usa Node 24, Chromium, PHP 8.3 e PostgreSQL/Redis descartáveis via Compose exclusivo. A referência da API é fixada por SHA. O job é limitado a 20 minutos, solicita apenas contents:read e publica relatório de testes por 7 dias. O ambiente é encerrado com always, inclusive após falha.
+
+Quality continua independente da API. Integrated experience depende do contrato público versionado da API, sem credenciais de aplicação ou acesso ao ambiente de desenvolvimento. Consulte end-to-end.md e web-m1-validation.md. Os dois checks devem ser conferidos após os pushes da rodada; não foi adicionada exigência de PR à master.

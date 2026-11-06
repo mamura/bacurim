@@ -24,6 +24,9 @@ Comece pelo [README](../README.md) para requisitos, instalação, ambiente, Trae
 - [Application Shell e composição de páginas](application-shell.md)
 - [Papéis e apresentação de acesso](access-presentation.md)
 
+- [Testes ponta a ponta com API real](end-to-end.md)
+- [Relatório e roteiro de validação WEB-M1](web-m1-validation.md)
+
 ## ADRs
 
 - [0001 — Arquitetura por funcionalidades](adr/0001-feature-based-architecture.md)

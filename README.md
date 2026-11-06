@@ -248,3 +248,13 @@ A issue #27 e as sub-issues #28 a #33 foram validadas e encerradas. Para conferi
 A issue #34 e as sub-issues #35 a #40 implementam GitHub Actions, qualidade automatizada, build sem API, convenções de contribuição, índice técnico e proteção da master contra exclusão e force push. O fluxo continua com commits e pushes diretos na master; o CI verifica o resultado após o push.
 
 Consulte as [execuções no GitHub Actions](https://github.com/mamura/bacurim/actions) e as [evidências e limites do CI](docs/continuous-integration.md). Para validar localmente, execute npm run check e consulte o índice docs/README.md. O grupo foi validado pelo mantenedor e as issues #34 a #40 foram encerradas. O milestone WEB-M0 — Foundation está concluído, com 40 issues finalizadas.
+
+## Experiência autenticada (WEB-M1)
+
+A rodada #42–81 implementa /login, restauração de sessão, logout, rotas privadas, resolução e alternância de empresas, Application Shell e apresentação por papel empresarial. As seis tarefas e suas sub-issues aguardam validação única do mantenedor.
+
+Acesse [Entrar no Bacurim](http://bacurim.mamura.test/login) com uma identidade da API configurada. NEXT_PUBLIC_API_ORIGIN aponta para a origem pública da API, sem /api/v1, e precisa ser configurada no build de produção. Sessão usa cookies Sanctum e CSRF; não há credenciais em localStorage.
+
+Consulte [o roteiro de validação](docs/web-m1-validation.md), [os contratos de autenticação](docs/authentication.md) e [os testes com API real](docs/end-to-end.md). O ambiente E2E tem contas próprias em banco descartável; nenhuma conta foi adicionada ao ambiente de desenvolvimento.
+
+A qualidade local usa npm run check. A suíte integrada usa npm run e2e:up, npm run test:e2e e npm run e2e:down. GitHub Actions executa Quality e Integrated experience separadamente, sem dependências de serviços locais.

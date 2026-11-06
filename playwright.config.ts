@@ -34,6 +34,9 @@ export default defineConfig({
       APP_URL: "http://127.0.0.1:3100",
       API_MOCKS_ENABLED: "false",
       NEXT_TELEMETRY_DISABLED: "1",
+      ENABLE_UI_PREVIEW: "false",
+      ENABLE_ARCHITECTURE_PREVIEW: "false",
+      ENABLE_HTTP_PREVIEW: "false",
     },
   },
 });

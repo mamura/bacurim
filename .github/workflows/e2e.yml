@@ -1,0 +1,65 @@
+name: E2E
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  integrated-experience:
+    name: Integrated experience
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      BACURIM_API_PATH: ${{ github.workspace }}/.e2e-api
+    steps:
+      - name: Checkout frontend
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Checkout verified API contract
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: mamura/bacurim-api
+          ref: bf1aa1d165585817be9da11c8e31ce0f91265adc
+          path: .e2e-api
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install locked frontend dependencies
+        run: npm ci
+      - name: Install Chromium and system dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Start disposable API and data stores
+        run: npm run e2e:up
+      - name: Validate integrated desktop and mobile journeys
+        run: npm run test:e2e
+      - name: Diagnostics on failure
+        if: failure()
+        run: docker compose -p bacurim-web-e2e -f tests/e2e/compose.yml logs --tail=80 api
+      - name: Preserve test report
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: web-m1-e2e
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+          if-no-files-found: ignore
+      - name: Remove disposable environment
+        if: always()
+        run: npm run e2e:down
