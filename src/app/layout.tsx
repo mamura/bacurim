@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import { SessionProvider } from "@shared/auth/session-provider";
 import { appConfig } from "@shared/config/app";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
@@ -18,7 +19,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang={appConfig.locale}>
       <body className="bg-background font-body text-text-primary">
-        {children}
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );
