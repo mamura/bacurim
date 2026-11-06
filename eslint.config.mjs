@@ -17,6 +17,8 @@ export default defineConfig([
     },
   },
   globalIgnores([
+    "playwright-report/**",
+    "test-results/**",
     ".next/**",
     "out/**",
     "coverage/**",

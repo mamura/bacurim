@@ -35,7 +35,8 @@
     "tests/**/*.mts",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "playwright.config.ts"
   ],
   "exclude": ["node_modules"]
 }

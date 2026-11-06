@@ -1,0 +1,78 @@
+name: bacurim-web-e2e
+services:
+  database:
+    image: postgres:18.6
+    environment:
+      POSTGRES_DB: bacurim_test
+      POSTGRES_USER: bacurim_test
+      POSTGRES_PASSWORD: testing-only
+    tmpfs: [/var/lib/postgresql]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bacurim_test -d bacurim_test"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  cache:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    tmpfs: [/data]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  api:
+    build:
+      context: .
+      args:
+        PHP_BASE: ${BACURIM_E2E_PHP_BASE:-php:8.3-cli-bookworm}
+    depends_on:
+      database: { condition: service_healthy }
+      cache: { condition: service_healthy }
+    ports: ["127.0.0.1:8011:8000"]
+    tmpfs: [/app]
+    volumes:
+      - ${BACURIM_API_PATH:-../../../bacurim-api}:/source:ro
+      - ./backend:/fixtures:ro
+    environment:
+      BACURIM_E2E: "true"
+      APP_ENV: testing
+      APP_DEBUG: "false"
+      APP_KEY: base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+      APP_URL: http://127.0.0.1:8011
+      APP_CONFIG_CACHE: /app/storage/framework/testing/config.php
+      APP_ROUTES_CACHE: /app/storage/framework/testing/routes.php
+      LOG_CHANNEL: "null"
+      DB_CONNECTION: pgsql
+      DB_HOST: database
+      DB_DATABASE: bacurim_test
+      DB_USERNAME: bacurim_test
+      DB_PASSWORD: testing-only
+      DB_URL: ""
+      REDIS_HOST: cache
+      CACHE_STORE: array
+      CACHE_LIMITER: auth_limits
+      SESSION_DRIVER: database
+      SESSION_CONNECTION: pgsql
+      SESSION_COOKIE: bacurim_e2e_session
+      SESSION_DOMAIN: "null"
+      SESSION_LIFETIME: "120"
+      CORS_ALLOWED_ORIGINS: http://127.0.0.1:3100
+      SANCTUM_STATEFUL_DOMAINS: 127.0.0.1:3100
+      TRUSTED_PROXIES: ""
+      BCRYPT_ROUNDS: "4"
+      PHP_CLI_SERVER_WORKERS: "4"
+    command: ["sh", "/fixtures/start.sh"]
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "--fail",
+          "--silent",
+          "http://127.0.0.1:8000/api/v1/health",
+        ]
+      interval: 3s
+      timeout: 3s
+      start_period: 90s
+      retries: 35

@@ -16,7 +16,10 @@
     "lint:fix": "eslint . --fix --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "npm run format:check && npm run lint && npm run check:architecture && npm run typecheck && npm test && npm run build"
+    "check": "npm run format:check && npm run lint && npm run check:architecture && npm run typecheck && npm test && npm run build",
+    "test:e2e": "playwright test",
+    "e2e:up": "docker compose -p bacurim-web-e2e -f tests/e2e/compose.yml up -d --build --wait --wait-timeout 240",
+    "e2e:down": "docker compose -p bacurim-web-e2e -f tests/e2e/compose.yml down --volumes --remove-orphans"
   },
   "engines": {
     "node": ">=24 <25",
@@ -31,6 +34,8 @@
     "server-only": "0.0.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.65.0",
     "@tailwindcss/postcss": "4.3.3",
     "@testing-library/dom": "10.4.2",
     "@testing-library/jest-dom": "7.0.1",
