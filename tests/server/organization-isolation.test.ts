@@ -71,3 +71,31 @@ test("revalidação substitui papel e não preserva permissões do vínculo anti
   store.dispose();
   expect(store.getSnapshot().organizations).toEqual([]);
 });
+
+test("resposta em trânsito de um escopo encerrado não entrega dados após reativação", async () => {
+  let finish: (response: Response) => void = () => {};
+  let notify: () => void = () => {};
+  const started = new Promise<void>((resolve) => {
+    notify = resolve;
+  });
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(() => {
+      notify();
+      return new Promise<Response>((resolve) => {
+        finish = resolve;
+      });
+    }),
+  );
+  const scope = new OrganizationRequestScope("org-1");
+  const request = scope.request("members");
+  const assertion = expect(request).rejects.toMatchObject({
+    kind: "cancelled",
+  });
+  await started;
+  scope.close();
+  scope.activate();
+  finish(Response.json({ data: ["old-private-data"] }));
+  await assertion;
+  scope.close();
+});
