@@ -3,20 +3,18 @@ import { expect, test, vi } from "vitest";
 test.each(["standard", "consultant"])(
   "recupera identidade %s e envia cookies",
   async (profile) => {
-    const fetch = vi
-      .fn()
-      .mockResolvedValue(
-        Response.json({
-          data: {
-            public_id: "uuid",
-            name: "Ana",
-            email: "ana@example.test",
-            profile,
-            status: "active",
-            email_verified_at: null,
-          },
-        }),
-      );
+    const fetch = vi.fn().mockResolvedValue(
+      Response.json({
+        data: {
+          public_id: "uuid",
+          name: "Ana",
+          email: "ana@example.test",
+          profile,
+          status: "active",
+          email_verified_at: null,
+        },
+      }),
+    );
     vi.stubGlobal("fetch", fetch);
     expect((await getAuthenticatedUser()).profile).toBe(profile);
     expect(fetch.mock.calls[0][1].credentials).toBe("include");

@@ -19,3 +19,13 @@ API e frontend devem compartilhar um domínio de cookies confiável. No local, S
 O transporte browser omite X-Request-ID de saída porque esse header não integra a allowlist CORS atual da API. A correlação local e o restante do cliente permanecem preservados. Não é necessário ampliar permissões CORS para autenticar.
 
 Referências de contrato: bacurim-api/docs/authentication.md e user-profiles.md. [Sanctum SPA](https://laravel.com/docs/12.x/sanctum#spa-authentication).
+
+## Sessão e rotas privadas (#48–53)
+
+SessionProvider compartilha somente a identidade pública em memória. SessionStore possui loading, authenticated, unauthenticated e error: rede e 403 não são logout. Consultas simultâneas são coalescidas; revisões impedem que uma resposta antiga restaure identidade após login/logout mais recente.
+
+AuthBoundary protege o grupo /app e oculta children durante loading, erro e redirecionamento. O servidor Next não consulta a API sem credenciais: a barreira é client-side. As páginas desta milestone contêm somente estrutura; futuros dados privados devem usar authenticatedRequest após a validação, nunca ser serializados por um Server Component sem verificação equivalente no servidor.
+
+GET auth/me restaura a identidade ao entrar e no retorno de foco/visibilidade. Após login, a identidade retornada é adotada. Logout usa bootstrap CSRF e POST auth/logout; somente sucesso ou 401 confirmado encerram o acesso. Se a rede falhar, mostra recuperação e exige revalidação, sem afirmar que a sessão do servidor foi encerrada. Nenhum cookie HttpOnly é manipulado.
+
+authenticatedRequest centraliza 401 dos endpoints protegidos e notifica o provider. 403 permanece autorização, 404 recurso indisponível. Uma época de autenticação impede que 401 de uma sessão anterior encerre uma nova. A identidade e o contexto privado deixam de ser renderizados durante revalidação; não há autorização baseada em localStorage.
