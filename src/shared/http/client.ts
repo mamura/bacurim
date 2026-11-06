@@ -81,7 +81,8 @@ export function createHttpClient(config: HttpClientConfig): HttpClient {
         if (body !== undefined) headers.set("Content-Type", "application/json");
         requestId =
           safeRequestId(headers.get("X-Request-ID")) ?? createRequestId();
-        headers.set("X-Request-ID", requestId);
+        if (config.sendRequestId !== false)
+          headers.set("X-Request-ID", requestId);
 
         for (let attempt = 0; ; attempt++) {
           let response: Response | undefined;

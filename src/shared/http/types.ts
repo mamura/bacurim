@@ -22,6 +22,7 @@ export interface HttpResponse<T> {
 }
 
 export interface HttpClientConfig {
+  sendRequestId?: boolean;
   baseUrl: string;
   timeoutMs?: number;
   retries?: number;
