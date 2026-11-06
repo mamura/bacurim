@@ -18,7 +18,10 @@ vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: state.push }),
 }));
 vi.mock("@shared/organizations/active-organization", () => ({
-  useActiveOrganization: () => ({ active: state.active, canSwitch: true }),
+  useActiveOrganization: () => ({
+    active: state.active,
+    canSwitch: state.canSwitch,
+  }),
 }));
 vi.mock("@shared/auth/session-provider", () => ({
   useSession: () => ({
@@ -73,3 +76,25 @@ test("menu móvel abre, fecha com Escape e devolve foco ao controle", async () =
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   expect(open).toHaveFocus();
 });
+
+test.each(["owner", "admin", "member", "viewer"])(
+  "papel %s preserva somente a navegação implementada",
+  (role) => {
+    state.active.role = role;
+    state.canSwitch = false;
+    render(
+      <ApplicationShell>
+        <h1>Conteúdo</h1>
+      </ApplicationShell>,
+    );
+    expect(screen.getByRole("link", { name: "Início" })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Trocar empresa" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("link", { name: /transações|relatórios|membros/i }),
+    ).not.toBeInTheDocument();
+    state.active.role = "owner";
+    state.canSwitch = true;
+  },
+);

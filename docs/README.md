@@ -17,6 +17,13 @@ Comece pelo [README](../README.md) para requisitos, instalação, ambiente, Trae
 | GitHub Actions, build e proteções               | [Integração contínua](continuous-integration.md) |
 | Registro e status das decisões                  | [Decisões técnicas](decisions.md)                |
 
+## Identidade e experiência autenticada (WEB-M1)
+
+- [Login, sessão e rotas protegidas](authentication.md)
+- [Organizações, seleção e isolamento](organizations.md)
+- [Application Shell e composição de páginas](application-shell.md)
+- [Papéis e apresentação de acesso](access-presentation.md)
+
 ## ADRs
 
 - [0001 — Arquitetura por funcionalidades](adr/0001-feature-based-architecture.md)

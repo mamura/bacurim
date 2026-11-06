@@ -7,8 +7,9 @@
 3. Implementar uma sub-issue por vez com testes de comportamento e documentação pertinentes.
 4. Executar npm run check e revisar o diff. Criar commit e enviar à master antes de iniciar a próxima sub-issue.
 5. Conferir o job Quality no commit enviado. Corrigir falhas por novo commit, sem reescrever histórico publicado.
-6. Ao concluir o grupo, apresentar o resultado para validação do mantenedor. Manter as issues abertas até essa validação.
-7. Após aprovação, fechar a issue principal e as sub-issues como completed e seguir para o próximo grupo.
+6. Na rodada WEB-M1, implementar as seis tarefas principais e suas sub-issues antes da validação única do mantenedor. O commit e push por sub-issue continuam obrigatórios; as issues permanecem abertas até essa validação final.
+
+Ao concluir o grupo, apresentar o resultado para validação do mantenedor. Manter as issues abertas até essa validação. 7. Após aprovação, fechar a issue principal e as sub-issues como completed e seguir para o próximo grupo.
 
 A pasta bacurim-web corresponde ao repositório mamura/bacurim. Não adicionar arquivos da API, da biblioteca UI ou da infraestrutura da pasta pai por engano.
 
