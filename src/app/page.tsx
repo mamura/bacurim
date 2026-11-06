@@ -1,5 +1,6 @@
 import { appConfig } from "@shared/config/app";
 import { Badge } from "bacurim-ui";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -10,6 +11,9 @@ export default function Home() {
         </Badge>
       </div>
       <h1 className="heading-lg">{appConfig.name}</h1>
+      <Link href="/login" className="body-md text-primary underline">
+        Entrar no Bacurim
+      </Link>
       <p className="body-md">A base da aplicação frontend está em execução.</p>
       <p className="body-sm text-text-secondary">
         Esta página temporária valida a inicialização do Bacurim. As
