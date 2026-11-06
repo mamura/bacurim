@@ -10,6 +10,7 @@ import {
 import type { FormEvent } from "react";
 import { useId, useRef, useState } from "react";
 
+import { loginErrorMessage } from "../model/login-error";
 import type { LoginInput } from "../model/login-validation";
 import { validateLogin } from "../model/login-validation";
 
@@ -49,10 +50,8 @@ export function LoginForm({
         password: values.password,
       });
       onSuccess?.();
-    } catch {
-      setFailure(
-        "Não foi possível entrar. Confira seus dados e tente novamente.",
-      );
+    } catch (error) {
+      setFailure(loginErrorMessage(error));
     } finally {
       setValues((current) => ({ ...current, password: "" }));
       busy.current = false;
