@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Alert,
-  AlertContent,
-  AlertDescription,
-  AlertTitle,
-  Button,
-} from "bacurim-ui";
+import { Alert, AlertContent, AlertDescription, Button } from "bacurim-ui";
 import type { ReactNode } from "react";
 
 interface PageErrorStateProps {
@@ -19,9 +13,7 @@ export function PageErrorState({ onRetry, children }: PageErrorStateProps) {
     <div className="mx-auto max-w-4xl space-y-4 p-6">
       <Alert variant="danger">
         <AlertContent>
-          <AlertTitle aria-level={1}>
-            Não foi possível carregar esta página
-          </AlertTitle>
+          <h1 className="heading-md">Não foi possível carregar esta página</h1>
           <AlertDescription>
             Tente novamente. Se o problema continuar, retorne à página anterior.
           </AlertDescription>

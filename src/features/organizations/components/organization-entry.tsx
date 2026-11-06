@@ -41,6 +41,7 @@ export function OrganizationEntry() {
       </div>
       {resolution.kind === "empty" ? (
         <PageEmptyState
+          headingLevel={1}
           title="Nenhuma empresa disponível"
           description="Sua conta está ativa, mas não possui vínculo com uma empresa disponível. Solicite acesso ao responsável pela empresa."
         >
@@ -50,6 +51,7 @@ export function OrganizationEntry() {
         </PageEmptyState>
       ) : resolution.kind === "inconsistent" ? (
         <PageEmptyState
+          headingLevel={1}
           title="Não foi possível resolver seu acesso"
           description="Os vínculos retornados precisam ser conferidos. Contate o suporte."
         >
@@ -61,7 +63,7 @@ export function OrganizationEntry() {
         <>
           <header>
             <h1 className="heading-lg">Escolha uma empresa</h1>
-            <p className="body-md mt-3 text-text-secondary">
+            <p className="body-md mt-3 text-text-primary">
               Olá, {user?.name}. Selecione o ambiente em que deseja trabalhar.
             </p>
           </header>

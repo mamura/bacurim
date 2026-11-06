@@ -21,6 +21,7 @@ export function ApplicationNavigation({
   const items = active ? navigationForOrganization(active) : [];
   return (
     <Sidebar
+      className="[&_.caption]:text-text-primary"
       collapsed={collapsed}
       onCollapsedChange={onCollapsedChange}
       header={
@@ -61,7 +62,7 @@ export function ApplicationNavigation({
       ]}
       footer={
         !collapsed && (
-          <p className="caption text-text-secondary">
+          <p className="caption text-text-primary">
             Seu ambiente, com clareza.
           </p>
         )

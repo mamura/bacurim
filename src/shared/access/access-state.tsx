@@ -1,4 +1,4 @@
-import { Alert, AlertContent, AlertDescription, AlertTitle } from "bacurim-ui";
+import { Alert, AlertContent, AlertDescription } from "bacurim-ui";
 import Link from "next/link";
 const messages = {
   401: {
@@ -26,7 +26,7 @@ export function AccessState({ status }: { status: 401 | 403 | 404 }) {
     <section className="mx-auto max-w-3xl space-y-6 p-6">
       <Alert variant="danger">
         <AlertContent>
-          <AlertTitle aria-level={1}>{message.title}</AlertTitle>
+          <h1 className="heading-md">{message.title}</h1>
           <AlertDescription>{message.description}</AlertDescription>
         </AlertContent>
       </Alert>

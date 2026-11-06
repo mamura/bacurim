@@ -25,3 +25,15 @@ Para usar outra localização, defina BACURIM_API_PATH com caminho absoluto da A
 Cada teste restaura fixtures e limites somente nos containers exclusivos. Execute com um worker e sem outra suíte usando esse projeto simultaneamente. e2e:down remove apenas o projeto de testes. O frontend é iniciado e encerrado pelo Playwright; uma porta 3100 ocupada falha a inicialização.
 
 A prontidão usa a mensagem Ready in do Next.js, com timeout. Isso evita depender de uma resposta imediata de porta fechada no WSL. Testes e2e não entram no Vitest padrão. Playwright verifica desktop 1440×900 e mobile 390×844, com cookies/contextos isolados e trace somente em falhas.
+
+## Acessibilidade e responsividade (#80)
+
+Chromium desktop 1440×900 e mobile 390×844 validam login, seleção, shell, Meu acesso e ausência de organização. A auditoria axe utiliza wcag2a, wcag2aa e wcag21aa; todos os cenários auditados passaram sem violações reportadas. Cada estado final possui um h1, e scrollWidth não ultrapassa a largura do viewport.
+
+O login foi operado por teclado; a navegação móvel foi aberta, fechada com Escape e devolveu foco ao acionador. Os testes verificam labels, controles essenciais e mensagens de formulário. Capturas desktop/mobile são geradas no diretório de resultados para conferência visual.
+
+A validação identificou contraste insuficiente do token secundário em textos pequenos. A composição da aplicação passou a usar o token de texto primário nesses pontos, inclusive captions da Sidebar, e a variante branca do botão Sair sobre o Header. Não foram alteradas as cores ou os componentes do pacote vendor.
+
+Os wrappers de título do tarball UI atual não encaminham aria-level. Os títulos de página/estado agora usam headings HTML semânticos na composição, mantendo os componentes de layout e tokens do Design System.
+
+A avaliação é limitada aos fluxos e viewports descritos, não uma certificação completa de conformidade. Alguns labels internos de navegação do tarball atual permanecem em inglês; o Menu da aplicação e as ações de negócio estão identificados em português.

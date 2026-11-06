@@ -57,7 +57,7 @@ export function ApplicationHeader({
               Trocar empresa
             </Button>
           )}
-          <LogoutButton />
+          <LogoutButton variant="white" />
         </>
       }
     />

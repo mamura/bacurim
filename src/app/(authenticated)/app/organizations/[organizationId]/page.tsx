@@ -2,7 +2,7 @@
 import { useActiveOrganization } from "@shared/organizations/active-organization";
 import { organizationPath } from "@shared/organizations/resolution";
 import { PageContent } from "@shared/ui/page-content";
-import { Card, CardContent, CardHeader, CardTitle } from "bacurim-ui";
+import { Card, CardContent, CardHeader } from "bacurim-ui";
 import Link from "next/link";
 export default function OrganizationHome() {
   const { active } = useActiveOrganization();
@@ -15,11 +15,11 @@ export default function OrganizationHome() {
     >
       <Card>
         <CardHeader>
-          <CardTitle aria-level={2}>Sua empresa</CardTitle>
+          <h2 className="heading-sm">Sua empresa</h2>
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="body-md break-words">{active?.name}</p>
-          <p className="body-sm text-text-secondary">
+          <p className="body-sm text-text-primary">
             As funcionalidades da empresa aparecerão aqui conforme forem
             disponibilizadas.
           </p>

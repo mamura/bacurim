@@ -16,7 +16,7 @@ export function PageContent({
         <div className="min-w-0">
           <h1 className="heading-lg break-words">{title}</h1>
           {description && (
-            <p className="body-md mt-3 max-w-2xl text-text-secondary">
+            <p className="body-md mt-3 max-w-2xl text-text-primary">
               {description}
             </p>
           )}
