@@ -1,8 +1,7 @@
 "use client";
-import { PageEmptyState } from "@shared/ui/page-empty-state";
+import { AccessState } from "@shared/access/access-state";
 import { PageErrorState } from "@shared/ui/page-error-state";
 import { PageLoading } from "@shared/ui/page-loading";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
@@ -27,17 +26,8 @@ function ValidatedOrganization({ children }: { children: ReactNode }) {
   if (state.status === "error")
     return <PageErrorState onRetry={() => void state.store.refresh()} />;
   if (!confirmed || state.status === "loading") return <PageLoading />;
-  if (!state.active)
-    return (
-      <PageEmptyState
-        title="Empresa indisponível"
-        description="Não foi possível acessar este ambiente. Verifique suas empresas disponíveis."
-      >
-        <Link href="/app" className="text-primary underline">
-          Voltar às empresas
-        </Link>
-      </PageEmptyState>
-    );
+  if (!state.active) return <AccessState status={404} />;
+  if (state.active.role === "unknown") return <AccessState status={403} />;
   return children;
 }
 export function OrganizationBoundary({ children }: { children: ReactNode }) {
