@@ -1,3 +1,4 @@
+import { LoginForm } from "@features/authentication";
 import { Card, CardContent, CardHeader, CardTitle } from "bacurim-ui";
 
 export const metadata = { title: "Entrar | Bacurim" };
@@ -9,7 +10,7 @@ export default function LoginPage() {
         <CardTitle aria-level={1}>Entre na sua conta</CardTitle>
       </CardHeader>
       <CardContent>
-        <p>Use seu e-mail e senha para acessar o Bacurim.</p>
+        <LoginForm />
       </CardContent>
     </Card>
   );
