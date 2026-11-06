@@ -18,7 +18,7 @@ export function ApplicationNavigation({
   const { active } = useActiveOrganization();
   const pathname = usePathname();
   const router = useRouter();
-  const items = active ? navigationForOrganization(active.public_id) : [];
+  const items = active ? navigationForOrganization(active) : [];
   return (
     <Sidebar
       collapsed={collapsed}
