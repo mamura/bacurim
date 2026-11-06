@@ -8,6 +8,7 @@ import {
   useSyncExternalStore,
 } from "react";
 
+import { subscribeUnauthorized } from "./authenticated-request";
 import { SessionStore } from "./session-store";
 
 const SessionContext = createContext<SessionStore | null>(null);
@@ -19,6 +20,7 @@ export function SessionProvider({
   store?: SessionStore;
 }) {
   const [store] = useState(() => suppliedStore ?? new SessionStore());
+  useEffect(() => subscribeUnauthorized(store.invalidate), [store]);
   useEffect(() => {
     const revalidate = () => {
       if (

@@ -1,7 +1,9 @@
 import type { ApiErrorView } from "@shared/http";
 import { ApiError, toApiErrorView } from "@shared/http";
 
+import { advanceAuthEpoch } from "./authenticated-request";
 import type { AuthUser } from "./contracts";
+import { logoutSession } from "./logout";
 import { getAuthenticatedUser } from "./services";
 
 export interface SessionSnapshot {
@@ -32,14 +34,28 @@ export class SessionStore {
     this.listeners.forEach((listener) => listener());
   }
   acceptUser = (user: AuthUser) => {
+    advanceAuthEpoch();
     this.version++;
     this.pending = undefined;
     this.set({ status: "authenticated", user });
   };
   invalidate = () => {
+    advanceAuthEpoch();
     this.version++;
     this.pending = undefined;
     this.set({ status: "unauthenticated", user: null });
+  };
+  logout = async (): Promise<void> => {
+    const version = ++this.version;
+    this.pending = undefined;
+    this.set({ status: "loading", user: null });
+    try {
+      await logoutSession();
+      if (version === this.version) this.invalidate();
+    } catch (error) {
+      if (version === this.version)
+        this.set({ status: "error", user: null, error: toApiErrorView(error) });
+    }
   };
   refresh = (): Promise<void> => {
     if (this.pending) return this.pending;
