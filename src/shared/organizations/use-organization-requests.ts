@@ -14,6 +14,9 @@ export function useOrganizationRequests() {
         : null,
     [id, revision, store],
   );
-  useEffect(() => () => scope?.close(), [scope]);
+  useEffect(() => {
+    scope?.activate();
+    return () => scope?.close();
+  }, [scope]);
   return scope;
 }

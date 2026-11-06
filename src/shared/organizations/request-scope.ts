@@ -9,12 +9,16 @@ export class OrganizationRequestScope {
     private onUnavailable: () => void = () => {},
     readonly revision = 0,
   ) {}
+  activate = () => {
+    if (this.controller.signal.aborted) this.controller = new AbortController();
+  };
   close = () => this.controller.abort();
   async request<T>(path: string, options: HttpRequestOptions = {}) {
-    if (this.controller.signal.aborted) throw new ApiError("cancelled");
+    const scopeSignal = this.controller.signal;
+    if (scopeSignal.aborted) throw new ApiError("cancelled");
     const signal = options.signal
-      ? AbortSignal.any([options.signal, this.controller.signal])
-      : this.controller.signal;
+      ? AbortSignal.any([options.signal, scopeSignal])
+      : scopeSignal;
     try {
       const response = await authenticatedRequest<T>(
         "api/v1/organizations/" +
@@ -23,10 +27,10 @@ export class OrganizationRequestScope {
           path,
         { ...options, signal },
       );
-      if (this.controller.signal.aborted) throw new ApiError("cancelled");
+      if (scopeSignal.aborted) throw new ApiError("cancelled");
       return response;
     } catch (error) {
-      if (this.controller.signal.aborted) throw new ApiError("cancelled");
+      if (scopeSignal.aborted) throw new ApiError("cancelled");
       if (error instanceof ApiError && [403, 404].includes(error.status ?? 0))
         this.onUnavailable();
       throw error;

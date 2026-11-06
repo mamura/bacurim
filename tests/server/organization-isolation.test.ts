@@ -55,3 +55,19 @@ test("requisição encerrada não pode executar ou entregar dados", async () => 
   });
   expect(fetch).not.toHaveBeenCalled();
 });
+
+test("revalidação substitui papel e não preserva permissões do vínculo antigo", async () => {
+  const load = vi
+    .fn()
+    .mockResolvedValueOnce([{ ...org, role: "admin" }])
+    .mockResolvedValueOnce([{ ...org, role: "viewer" }]);
+  const store = new OrganizationStore(load);
+  await store.refresh();
+  expect(store.getSnapshot().organizations[0].role).toBe("admin");
+  const request = store.refresh();
+  expect(store.getSnapshot().organizations).toEqual([]);
+  await request;
+  expect(store.getSnapshot().organizations[0].role).toBe("viewer");
+  store.dispose();
+  expect(store.getSnapshot().organizations).toEqual([]);
+});

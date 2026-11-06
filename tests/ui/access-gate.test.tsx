@@ -44,3 +44,29 @@ test("carregamento não concede acesso mesmo com papel conhecido", () => {
   context.status = "ready";
   context.role = "viewer";
 });
+
+test("troca de vínculo recalcula ações e carregamento remove permissões anteriores", () => {
+  context.status = "ready";
+  context.role = "admin";
+  const { rerender } = render(
+    <AccessGate permission="members.manage">
+      <p>Gerenciar membros</p>
+    </AccessGate>,
+  );
+  expect(screen.getByText("Gerenciar membros")).toBeInTheDocument();
+  context.status = "loading";
+  rerender(
+    <AccessGate permission="members.manage">
+      <p>Gerenciar membros</p>
+    </AccessGate>,
+  );
+  expect(screen.queryByText("Gerenciar membros")).not.toBeInTheDocument();
+  context.status = "ready";
+  context.role = "viewer";
+  rerender(
+    <AccessGate permission="members.manage">
+      <p>Gerenciar membros</p>
+    </AccessGate>,
+  );
+  expect(screen.queryByText("Gerenciar membros")).not.toBeInTheDocument();
+});
